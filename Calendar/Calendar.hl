@@ -1,0 +1,35 @@
+[
+;    NameC;
+    75BCD15,3ADE68B1,CC6F6AE; 
+    200,200,200;
+
+]
+[
+;    Name;
+    Comment;
+    930;                  
+    50;                                        
+    http://example.com/images/img1,htpp://example.com/images/img3 ;      
+    75BCD15,3ADE68B1;     
+    3;                     
+    200,200,200;     
+]
+[
+;    Name;
+    Comment;
+    930;                  
+    50;                   
+                      
+    
+
+    http://example.com/images/img1, htpp://example.com/images/img2, htpp://example.com/images/img3 ;
+       
+    75BCD15,3ADE68B1,CC6F6AE;
+     
+    3;                     
+    200,200,200;
+]
+
+
+
+

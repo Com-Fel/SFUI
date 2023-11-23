@@ -1,0 +1,12 @@
+﻿  Source.cpp
+C:\Users\Миша\source\repos\Calendar\Calendar\parser.h(204,34): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Миша\source\repos\Calendar\Calendar\parser.h(220,26): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Миша\source\repos\Calendar\Calendar\parser.h(240,26): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Миша\source\repos\Calendar\Calendar\parser.h(197,21): warning C4101: Cb: неиспользованная локальная переменная
+C:\Users\Миша\source\repos\Calendar\Calendar\parser.h(197,17): warning C4101: Cg: неиспользованная локальная переменная
+C:\Users\Миша\source\repos\Calendar\Calendar\parser.h(197,13): warning C4101: Cr: неиспользованная локальная переменная
+  Создание кода
+  Previous IPDB not found, fall back to full compilation.
+  All 411 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  Calendar.vcxproj -> C:\Users\Миша\source\repos\Calendar\Release\Calendar.exe

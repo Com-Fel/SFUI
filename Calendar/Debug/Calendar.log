@@ -1,0 +1,59 @@
+﻿  Source.cpp
+C:\Users\Миша\source\repos\Calendar\Calendar\basic.h(59,11): warning C4244: инициализация: преобразование "T" в "int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\basic.h(60,12): warning C4244: инициализация: преобразование "T" в "int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\Button.h(30,31): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\Button.h(30,23): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\Button.h(62,26): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\Button.h(62,20): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\label.h(24,69): warning C4244: аргумент: преобразование "double" в "unsigned int", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\label.h(24,47): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\image.h(22,31): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\image.h(22,23): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(30,30): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(30,23): warning C4244: аргумент: преобразование "T" в "unsigned int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(31,22): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(66,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(101,40): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(101,28): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(104,25): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(104,23): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(107,28): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\textbox.h(107,21): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Миша\source\repos\Calendar\Calendar\key.h(37,22): warning C4302: <function-style-cast>: усечение из "const char *" к "char"
+  Calendar.vcxproj -> C:\Users\Миша\source\repos\Calendar\Debug\Calendar.exe
