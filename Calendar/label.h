@@ -1,11 +1,6 @@
 #pragma once
 
-#include<iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include "basic.h"
+
 #include "UI.h"
 
 using namespace std;

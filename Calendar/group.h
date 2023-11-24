@@ -1,20 +1,10 @@
 #pragma once
 
-#include<iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include "basic.h"
 #include "UI.h"
-#include "key.h"
 
-#include <typeinfo>
 using namespace std;
 
 using namespace sf;
-using namespace basic;
-using namespace UI;
 
 
 namespace UI {
@@ -36,6 +26,7 @@ namespace UI {
 			texture.create(size.x, size.y);
 
 		}
+		Group(){}
 		Sprite update(InputInfo inf) {
 			localMouse.pos.x = inf.mouse.pos.x - pos.x;
 			localMouse.pos.y = inf.mouse.pos.y - pos.y;

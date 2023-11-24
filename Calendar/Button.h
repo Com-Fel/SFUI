@@ -1,11 +1,7 @@
 #pragma once
 
-#include<iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include "basic.h"
+#include "UI.h"
+
 
 
 using namespace std;
@@ -15,10 +11,11 @@ using namespace basic;
 
 namespace UI {
 
-	class Button: public Clickeble, public Texteble, public Colored, public Bordered {
+	class Button: public Clickable, public Texteble, public Colored, public Bordered {
 	private:
 		
 	public:
+		Button(){}
 		Button(Vector2f pos, Vector2f size, Vector2f mar, int bord, vector<vector<Color>> colors, int fontSize, string fontName, string tag, string text) {
 			this->pos = pos;
 			this->size = size;
@@ -33,9 +30,10 @@ namespace UI {
 
 		}
 
-		Sprite update(MouseInf mouse) {
-			ishov = isHover(mouse.pos);
-			isClicked(mouse.clicked);
+		Sprite update(MouseInf mouseInf) {
+			this->mouseInf = mouseInf;
+			isHover();
+			isClicked();
 			draw();
 			const sf::Texture& out = texture.getTexture();
 

@@ -1,11 +1,6 @@
 #pragma once
 
-#include<iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include "basic.h"
+
 #include "UI.h"
 
 using namespace std;
@@ -14,7 +9,7 @@ using namespace sf;
 using namespace basic;
 
 namespace UI {
-	class Textbox :  public Texteble, public Colored, public Clickeble {
+	class Textbox :  public Texteble, public Colored, public Clickable {
 	public:
 		int b, b2;
 		bool selected = false;
@@ -35,14 +30,15 @@ namespace UI {
 			texture.create(size.x,size.y);
 			instr = size.x*1.3/ fontSize;
 		}
+		
 		Sprite update(MouseInf mouse,string inp) {
 			
-
+			mouseInf = mouse;
 
 			input = inp;
 
-			ishov = isHover(mouse.pos);
-			isClicked(mouse.clicked);
+			isHover();
+			isClicked();
 			txt();
 			draw(mouse.pos, mouse.clicked);
 			if (isclicked) {

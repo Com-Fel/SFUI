@@ -1,13 +1,24 @@
 #pragma once
-#include<iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <SFML/Graphics.hpp>
+#include "UI.h"
+
 using namespace std;
 
 using namespace sf;
 namespace basic {
+	class MouseInf {
+	public:
+		bool clicked = false;
+		Vector2i pos;
+		MouseInf() {}
+		MouseInf(Vector2i pos, bool clicked) {
+			this->pos.x = pos.x;
+			this->pos.y = pos.y;
+
+			this->clicked = clicked;
+		}
+	};
+
+
 	class base {
 	public:
 		Vector2f pos, size, mar;
@@ -37,29 +48,31 @@ namespace basic {
 
 	};
 
-	class Clickeble: public base {
+	class Clickable: public base {
 	public:
 		bool ishov, isclicked;
-		bool isClicked(bool mouseClick) {
+		MouseInf mouseInf;
+		bool isClicked() {
 
-			if (ishov && mouseClick) {
+			if (ishov && mouseInf.clicked) {
 				isclicked = true;
 			}
 			else {
 				isclicked = false;
 
-			}
+			}			
+
 			return isclicked;
 
 		}
 
-		bool isHover(Vector2i mPos) {
-			int mx = mPos.x;
-			int my = mPos.y;
+		bool isHover() {
+			int mx = mouseInf.pos.x;
+			int my = mouseInf.pos.y;
 			int sx = size.x;
 			int  sy = size.y;
 
-			if (((pos.x < mx && mx < pos.x + sx) && (pos.y < my && my < pos.y + sy))) {
+			if (((pos.x < mx && mx < pos.x + sx) && (pos.y < my && my < pos.y + sy))&&(!mouseInf.clicked||ishov)) {
 				ishov = true;
 				return true;
 			}
@@ -103,16 +116,32 @@ namespace basic {
 			this->bord = bord;
 		}
 	};
-	class MouseInf {
+	class Dragable:public Clickable{
 	public:
-		bool clicked = false;
-		Vector2i pos;
-		MouseInf(){}
-		MouseInf(Vector2i pos, bool clicked) {
-			this->pos.x = pos.x;
-			this->pos.y = pos.y;
+		bool blockX, blockY,selected =  false;
+		Vector2i correct;
+		void drag() {
+			if (!selected) {
+				if (!blockX) {
+					correct.x = pos.x - mouseInf.pos.x;
+				}
+				if (!blockY) {
+					correct.y = pos.y - mouseInf.pos.y;
+				}
+			}
+			if (isclicked|| selected) {
+				selected = true;
+				setPos(Vector2f((mouseInf.pos.x + correct.x)* !blockX, (mouseInf.pos.y + correct.y)*!blockY));
 
-			this->clicked = clicked;
+			}
+			if(!mouseInf.clicked) {
+				selected = false;
+
+			}
 		}
+
 	};
+
+
+	
 }
