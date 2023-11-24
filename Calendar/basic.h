@@ -15,7 +15,7 @@ namespace basic {
 		string  tag;
 		int id;
 		base(){}
-		
+		Sprite update() {};
 		Vector2f getPos() {
 			return pos;
 		}
@@ -101,6 +101,18 @@ namespace basic {
 		}
 		void setBorderSize(int bord) {
 			this->bord = bord;
+		}
+	};
+	class MouseInf {
+	public:
+		bool clicked = false;
+		Vector2i pos;
+		MouseInf(){}
+		MouseInf(Vector2i pos, bool clicked) {
+			this->pos.x = pos.x;
+			this->pos.y = pos.y;
+
+			this->clicked = clicked;
 		}
 	};
 }

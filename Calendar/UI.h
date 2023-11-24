@@ -5,3 +5,5 @@
 #include "image.h"
 #include "textbox.h"
 #include "key.h"
+#include "group.h"
+#include "key.h"

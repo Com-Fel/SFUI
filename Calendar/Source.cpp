@@ -31,10 +31,17 @@ int main() {
     Button b(Vector2f(100, 50), Vector2f(100, 100), Vector2f(20, 35), 5,  butC ,20,"arial.ttf","","Button");
     Button b2(Vector2f(205, 50), Vector2f(100, 45), Vector2f(30, 10), 3, butC, 20, "arial.ttf", "", "But2");
     Button b3(Vector2f(205, 100), Vector2f(100, 50), Vector2f(30, 10), 3, butC2, 20, "arial.ttf", "", "But3");
-    Label l(Vector2f(350, 50), Vector2f(20, 10), {Color(255,255,255),Color(0,0,0,100)}, "arial.ttf",20,"vaav");
-    ImageBlock banan(Vector2f(350, 100), Vector2f(100, 100),"images/banan.jpg");
-    Textbox tb(Vector2f(100, 200), Vector2f(100, 50), 3, 2, { {Color(150,150,150),Color(255,255,255),Color(50,50,150),Color(0,0,0)} , {Color(200,200,200),Color(255,255,255),Color(0,0,255),Color(0,0,0)} }, "arial.ttf", 15);
+    Label l(Vector2f(100, 0), Vector2f(20, 10), {Color(255,255,255),Color(0,0,0,100)}, "arial.ttf",20,"vaav");
+    ImageBox banan(Vector2f(350, 100), Vector2f(100, 100),"images/banan.jpg");
+    Textbox tb(Vector2f(100, 200), Vector2f(100, 50),"Input...", 3, 2, { {Color(150,150,150),Color(255,255,255),Color(50,50,150),Color(0,0,0),Color(150,150,150)} , {Color(200,200,200),Color(255,255,255),Color(0,0,255),Color(0,0,0)} }, "arial.ttf", 15);
+    Group gr(Vector2f(50,100), Vector2f(300,300),Color(0,0,0,100));
 
+
+    banan.setPos(Vector2f(0, 0));
+    gr.append(&b);
+    gr.append(&l);
+    gr.append(&banan);
+    gr.append(&tb);
 
     Font font;
     Text text;
@@ -43,17 +50,22 @@ int main() {
     text.setString("Hello world");
     text.setFont(font);
     text.setCharacterSize(24); 
-   
+    
     bool clicked = false;
 // set the color
     text.setFillColor(sf::Color::Red);
 
     RectangleShape s;
+
+
+    InputInfo inputInfo;
     while (window.isOpen())
     {
         string inp = "";
-
+        
         sf::Event evt;
+        inputInfo.keyboardInput = "";
+
         while (window.pollEvent(evt))
 
         {
@@ -61,44 +73,14 @@ int main() {
 
                 window.close();
             }
-            if (evt.type == sf::Event::KeyPressed) {
-                if (inp != "DELETE2") {
-                    inp += keytoch(evt);
-
-                    
-                }
-                if (evt.key.code == 59) {
-                    inp = "DELETE2";
-                }
-            }
-            if (evt.type == sf::Event::MouseButtonPressed) {
-                if (evt.mouseButton.button == sf::Mouse::Left) {
-                    clicked = true;
-                }
-                
-            }
-            if (evt.type == sf::Event::MouseButtonReleased) {
-                if (evt.mouseButton.button == sf::Mouse::Left) {
-                    clicked = false;
-                }
-            }
+            inputInfo.update(evt, Mouse::getPosition(window));
             
         }
-        
         window.clear(sf::Color::Red);
        // cout << Mouse::getPosition(window).x << " " << Mouse::getPosition(window).y << endl;
+        window.draw(gr.update(inputInfo));
        
-        // draw it to the window
-
-        window.draw(banan.update());
-        
-
-        window.draw(b.update(Mouse::getPosition(window), clicked));
-        window.draw(b2.update(Mouse::getPosition(window), clicked));
-        
-        window.draw(b3.update(Mouse::getPosition(window), clicked));
-        window.draw(l.update());
-        window.draw(tb.update(Mouse::getPosition(window), clicked,inp));
+ 
         window.display();
 
     }

@@ -6,6 +6,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "basic.h"
+#include "UI.h"
+
 using namespace std;
 
 using namespace sf;
@@ -17,9 +19,11 @@ namespace UI {
 		int b, b2;
 		bool selected = false;
 		string input;
-		int strings = 1, instr,ticker = 30;
+		const int tTime = 20;
+		int strings = 1, instr,ticker = tTime;
 		string stText = text;
-		Textbox(Vector2f pos,Vector2f size, int b,int b2,vector<vector<Color>> colors,string fontName, int fontSize) {
+		string placeHolder;
+		Textbox(Vector2f pos,Vector2f size, string placeHolder, int b,int b2,vector<vector<Color>> colors,string fontName, int fontSize) {
 			this->pos = pos;
 			this->size = size;
 			this->b = b;
@@ -27,16 +31,27 @@ namespace UI {
 			this->colors = colors;
 			this->fontName = fontName;
 			this->fontSize = fontSize;
+			this->placeHolder = placeHolder;
 			texture.create(size.x,size.y);
 			instr = size.x*1.3/ fontSize;
 		}
-		Sprite update(Vector2i mPos, bool mouseClick,string inp) {
-			input = inp;
-			txt();
-			ishov = isHover(mPos);
-			isClicked(mouseClick);
-			draw(mPos,mouseClick);
+		Sprite update(MouseInf mouse,string inp) {
 			
+
+
+			input = inp;
+
+			ishov = isHover(mouse.pos);
+			isClicked(mouse.clicked);
+			txt();
+			draw(mouse.pos, mouse.clicked);
+			if (isclicked) {
+				selected = true;
+			}
+			if (mouse.clicked && !ishov) {
+				selected = false;
+
+			}
 			const sf::Texture& out = texture.getTexture();
 
 			Sprite sprite(out);
@@ -44,6 +59,7 @@ namespace UI {
 			return sprite;
 		}
 		void txt() {
+			
 			if (input != "" || !selected) {
 				if (!stText.empty() && stText[stText.length() - 1] == '|') {
 					stText.pop_back();
@@ -77,14 +93,21 @@ namespace UI {
 				if (ticker == 0) {
 					stText += '|';
 				}
-				else if (ticker == -30) {
+				else if (ticker == -tTime) {
 					if (!stText.empty() && stText[stText.length() - 1] == '|') {
 						stText.pop_back();
 					}
-					ticker = 30;
+					ticker = tTime;
 				}
 			}
+			else {
+				ticker = tTime;
 
+				if (input == "" && stText == "") {
+					text = placeHolder;
+				}
+			}
+			
 		}
 		void draw(Vector2i mPos, bool mouseClick) {
 
@@ -106,13 +129,7 @@ namespace UI {
 
 			fon.setPosition(b+b2, b + b2);	
 			fon.setSize(Vector2f(size.x -(b + b2)*2, size.y - (b + b2) * 2));
-			if (isclicked) {
-				selected = true;
-			}
-			if (mouseClick && !ishov) {
-				selected = false;
-
-			}
+			
 
 			if (selected) {
 				texture.clear(colors[1][0]);
@@ -121,13 +138,17 @@ namespace UI {
 				Text.setFillColor(colors[1][3]);
 
 			}
+			else if(stText =="") {
+				texture.clear(colors[0][0]);
+				fon.setFillColor(colors[0][1]);
+				border.setFillColor(colors[0][2]);
+				Text.setFillColor(colors[0][4]);
+			}
 			else {
 				texture.clear(colors[0][0]);
 				fon.setFillColor(colors[0][1]);
 				border.setFillColor(colors[0][2]);
 				Text.setFillColor(colors[0][3]);
-
-
 			}
 
 			texture.draw(border);

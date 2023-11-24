@@ -6,6 +6,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "basic.h"
+
+
 using namespace std;
 
 using namespace sf;
@@ -30,9 +32,10 @@ namespace UI {
 			texture.create(size.x, size.y);
 
 		}
-		Sprite update(Vector2i mPos, bool mouseClick) {
-			ishov = isHover(mPos);
-			isClicked(mouseClick);
+
+		Sprite update(MouseInf mouse) {
+			ishov = isHover(mouse.pos);
+			isClicked(mouse.clicked);
 			draw();
 			const sf::Texture& out = texture.getTexture();
 

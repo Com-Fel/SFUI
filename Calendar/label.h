@@ -6,6 +6,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "basic.h"
+#include "UI.h"
+
 using namespace std;
 
 using namespace sf;

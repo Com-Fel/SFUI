@@ -155,6 +155,7 @@
     <ClInclude Include="image.h" />
     <ClInclude Include="key.h" />
     <ClInclude Include="label.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="textbox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

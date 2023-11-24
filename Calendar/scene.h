@@ -7,18 +7,11 @@
 #include <SFML/Graphics.hpp>
 #include "basic.h"
 #include "UI.h"
-#include "key.h"
-
-#include <typeinfo>
-using namespace std;
-
 using namespace sf;
-using namespace basic;
 using namespace UI;
 
-
 namespace UI {
-	class Group :public base,public Colored {
+	class Scene:public base, public Colored {
 	public:
 		vector<Button*> buttons;
 		vector<Label*> labels;
@@ -27,7 +20,7 @@ namespace UI {
 		MouseInf localMouse;
 
 		string input;
-		Group(Vector2f pos, Vector2f size, Color color) {
+		Scene(Vector2f pos, Vector2f size, Color color) {
 			this->pos = pos;
 			this->size = size;
 			colors.push_back({});
@@ -36,13 +29,13 @@ namespace UI {
 			texture.create(size.x, size.y);
 
 		}
-		Sprite update(InputInfo inf) {
-			localMouse.pos.x = inf.mouse.pos.x - pos.x;
-			localMouse.pos.y = inf.mouse.pos.y - pos.y;
-			localMouse.clicked = inf.mouse.clicked;
-			input = inf.keyboardInput;
-			
-			
+		Sprite update(MouseInf mouse, string inp) {
+			localMouse.pos.x = mouse.pos.x - pos.x;
+			localMouse.pos.y = mouse.pos.y - pos.y;
+			localMouse.clicked = mouse.clicked;
+			input = inp;
+
+
 			draw();
 
 			const sf::Texture& out = texture.getTexture();
@@ -52,9 +45,9 @@ namespace UI {
 			return sprite;
 		}
 		void draw() {
-			
-			
-			
+
+
+
 			texture.clear(colors[0][0]);
 			for (int i = 0;i < buttons.size();i++) {
 				texture.draw(buttons[i]->update(localMouse));
@@ -74,20 +67,21 @@ namespace UI {
 			texture.display();
 
 		}
-		void append(Button *but) {
+		void append(Button* but) {
 			buttons.push_back(but);
 		}
-		void append(Label *lab) {
+		void append(Label* lab) {
 			labels.push_back(lab);
 
 		}
-		void append(ImageBox *im) {
+		void append(ImageBox* im) {
 			images.push_back(im);
 
 		}
-		void append(Textbox *tb) {
+		void append(Textbox* tb) {
 			textboxes.push_back(tb);
 
 		}
 	};
+	
 }
