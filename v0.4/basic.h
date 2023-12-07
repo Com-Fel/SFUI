@@ -5,9 +5,18 @@ using namespace std;
 
 using namespace sf;
 namespace basic {
+
+	float max(vector<float> pp) {
+		return pp[distance(pp.begin(), max_element(pp.begin(), pp.end()))];
+	}
+	float min(vector<float> pp) {
+		return pp[distance(pp.begin(), min_element(pp.begin(), pp.end()))];
+	}
+
 	class MouseInf {
 	public:
 		bool clicked = false;
+		int scroll = 0;
 		Vector2i pos;
 		MouseInf() {}
 		MouseInf(Vector2i pos, bool clicked) {
@@ -50,8 +59,10 @@ namespace basic {
 
 	class Clickable: public base {
 	public:
-		bool ishov, isclicked;
+		bool ishov, isclicked, selected;
 		MouseInf mouseInf;
+		MouseInf localMouseInf;
+		Sprite sprite;
 		bool isClicked() {
 
 			if (ishov && mouseInf.clicked) {
@@ -71,7 +82,7 @@ namespace basic {
 			int my = mouseInf.pos.y;
 			int sx = size.x;
 			int  sy = size.y;
-
+			
 			if (((pos.x < mx && mx < pos.x + sx) && (pos.y < my && my < pos.y + sy))&&(!mouseInf.clicked||ishov)) {
 				ishov = true;
 				return true;
@@ -118,7 +129,7 @@ namespace basic {
 	};
 	class Dragable:public Clickable{
 	public:
-		bool blockX, blockY,selected =  false;
+		bool blockX, blockY =  false;
 		Vector2i correct;
 		void drag() {
 			if (!selected) {
@@ -131,7 +142,18 @@ namespace basic {
 			}
 			if (isclicked|| selected) {
 				selected = true;
-				setPos(Vector2f((mouseInf.pos.x + correct.x)* !blockX, (mouseInf.pos.y + correct.y)*!blockY));
+				if (blockX) {
+					setPos(Vector2f(pos.x, (mouseInf.pos.y + correct.y)));
+
+				}
+				else if (blockY) {
+					setPos(Vector2f((mouseInf.pos.x + correct.x),pos.y));
+
+				}
+				else {
+					setPos(Vector2f((mouseInf.pos.x + correct.x), (mouseInf.pos.y + correct.y)));
+
+				}
 
 			}
 			if(!mouseInf.clicked) {

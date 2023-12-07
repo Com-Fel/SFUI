@@ -37,7 +37,7 @@ namespace UI {
 			Sprite sprite(out);
 			sprite.setScale(size.x/out.getSize().x, size.y / out.getSize().y);
 
-			texture.clear();
+			texture.clear(Color(0,0,0,0));
 			texture.draw(sprite);
 			texture.display();
 

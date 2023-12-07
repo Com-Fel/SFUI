@@ -15,3 +15,5 @@
 #include "key.h"
 #include "slider.h"
 #include "switcher.h"
+#include "baseshape.h"
+#include "Transformable.h"

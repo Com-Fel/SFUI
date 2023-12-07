@@ -16,6 +16,7 @@ namespace UI {
 		vector<Textbox*> textboxes;
 		vector<Group*> groups;
 
+		Vector2f offset = Vector2f(50,0);
 		MouseInf localMouse;
 
 		string input;
@@ -31,8 +32,11 @@ namespace UI {
 		}
 		Group(){}
 		Sprite update(InputInfo inf) {
-			localMouse.pos.x = inf.mouse.pos.x - pos.x;
-			localMouse.pos.y = inf.mouse.pos.y - pos.y;
+
+			offset.y += inf.mouse.scroll;
+			
+			localMouse.pos.x = inf.mouse.pos.x - pos.x-offset.x;
+			localMouse.pos.y = inf.mouse.pos.y - pos.y - offset.y;
 			localMouse.clicked = inf.mouse.clicked;
 			input = inf.keyboardInput;
 			localInf.update(inf.evt, localMouse.pos);
@@ -51,22 +55,47 @@ namespace UI {
 			
 			texture.clear(colors[0][0]);
 			for (int i = 0;i < buttons.size();i++) {
-				texture.draw(buttons[i]->update(localMouse));
+
+				Vector2f p = buttons[i]->getPos();
+				Sprite tempTexture = buttons[i]->update(localMouse);
+				tempTexture.setPosition(p.x + offset.x, p.y + offset.y);
+				texture.draw(tempTexture);
 			}
 			for (int i = 0;i < labels.size();i++) {
-				texture.draw(labels[i]->update());
+				Vector2f p = labels[i]->getPos();
+				Sprite tempTexture = labels[i]->update();
+				tempTexture.setPosition(p.x + offset.x, p.y + offset.y);
+				texture.draw(tempTexture);
+
+				
 
 			}
 			for (int i = 0;i < images.size();i++) {
-				texture.draw(images[i]->update());
+
+				Vector2f p = images[i]->getPos();
+				Sprite tempTexture = images[i]->update();
+				tempTexture.setPosition(p.x + offset.x, p.y + offset.y);
+				texture.draw(tempTexture);
+				
 
 			}
 			for (int i = 0;i < textboxes.size();i++) {
-				texture.draw(textboxes[i]->update(localMouse, input));
+				Vector2f p = textboxes[i]->getPos();
+				Sprite tempTexture = textboxes[i]->update(localMouse, input);
+				tempTexture.setPosition(p.x + offset.x, p.y + offset.y);
+				texture.draw(tempTexture);
+
+				
 
 			}
 			for (int i = 0;i < groups.size();i++) {
-				texture.draw(groups[i]->update(localInf));
+				Vector2f p = groups[i]->getPos();
+				Sprite tempTexture = groups[i]->update(localInf);
+				tempTexture.setPosition(p.x + offset.x, p.y + offset.y);
+				texture.draw(tempTexture);
+
+
+				
 
 			}
 			texture.display();

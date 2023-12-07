@@ -35,6 +35,8 @@ char keytoch(Event evt) {
     }
     return char(out);
 }
+
+
 class InputInfo {
 public:
     string keyboardInput = "";
@@ -68,6 +70,15 @@ public:
                 mouse.clicked = false;
             }
         }
+        mouse.scroll = 0;
+
+        if (evt.type == sf::Event::MouseWheelScrolled ) {
+            mouse.scroll = evt.mouseWheelScroll.delta*5;
+            
+        }
+       
+        
+        
     }
 
 };
