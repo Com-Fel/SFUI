@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
+
 #include "basic.h"
 #include "Button.h"
 #include "label.h"
@@ -17,3 +18,4 @@
 #include "switcher.h"
 #include "baseshape.h"
 #include "Transformable.h"
+#include "gradient.h"
