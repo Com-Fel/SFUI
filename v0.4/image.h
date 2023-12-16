@@ -24,7 +24,7 @@ namespace UI {
 
 		}
 		ImageBox(){}
-		Sprite update() {
+		Sprite update(basic::InputInfo inputInf) {
 			
 
 			sprite.setPosition(pos);

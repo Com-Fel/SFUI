@@ -32,7 +32,7 @@ namespace UI {
 	class Textbox :  public Texteble, public Colored, public Clickable {
 	public:
 		int b, b2;
-		bool selected = false;
+		
 		string input;
 		const int tTime = 20;
 		int strings = 1, instr,ticker = tTime;
@@ -62,25 +62,20 @@ namespace UI {
 			texture.create(size.x, size.y);
 			instr = size.x * 1.3 / fontSize;
 		}
-		Sprite update(MouseInf mouse,string inp) {
+		Sprite update(InputInfo inputInf) {
 			
-			mouseInf = mouse;
+			mouseInf = inputInf.mouse;
 
-			input = inp;
+			input = inputInf.keyboardInput;
 
 			isHover();
 			isClicked();
+			isSelected();
 			
 			txt();
 			
-			draw(mouse.pos, mouse.clicked);
-			if (isclicked) {
-				selected = true;
-			}
-			if (mouse.clicked && !ishov) {
-				selected = false;
-
-			}
+			draw();
+			
 			const sf::Texture& out = texture.getTexture();
 
 			Sprite sprite(out);
@@ -138,7 +133,7 @@ namespace UI {
 			}
 
 		}
-		void draw(Vector2i mPos, bool mouseClick) {
+		void draw() {
 
 			RectangleShape border;
 			RectangleShape fon;

@@ -17,18 +17,18 @@ namespace UI {
 		int bord, fontSize;
 		vector<vector<Color>> colors;
 		string fontName;
+		vector<float> rads;
 		ButtonStyle() {}
-		ButtonStyle(vector<vector<Color>> colors, int bord, Vector2f mar, int fontSize, string fontName) {
+		ButtonStyle(vector<vector<Color>> colors, int bord, Vector2f mar, int fontSize, string fontName, vector<float> rads) {
 			this->bord = bord;
 			this->colors = colors;
 			this->fontSize = fontSize;
 			this->fontName = fontName;
 			this->mar = mar;
-
+			this->rads = rads;
 		}
 	};
 	class Button: public Clickable, public Texteble, public Colored, public Bordered {
-	private:
 		
 	public:
 		Button(){}
@@ -53,28 +53,51 @@ namespace UI {
 			this->colors = style.colors;
 			this->fontSize = style.fontSize;
 			this->fontName = style.fontName;
+			this->rads = style.rads;
 			this->tag = tag;
 			this->text = text;
+
 			texture.create(size.x, size.y);
 		}
-		Sprite update(MouseInf mouseInf) {
-			this->mouseInf = mouseInf;
+		void Create(Vector2f pos, Vector2f size, ButtonStyle style, string tag, string text) {
+			this->pos = pos;
+			this->size = size;
+			this->mar = style.mar;
+			this->bord = style.bord;
+			this->colors = style.colors;
+			this->fontSize = style.fontSize;
+			this->fontName = style.fontName;
+			this->rads = style.rads;
+			this->tag = tag;
+			this->text = text;
+			
+			texture.create(size.x, size.y);
+		}
+		Sprite update(InputInfo inf) {
+			this->mouseInf = inf.mouse;
 			isHover();
 			isClicked();
+			isSelected();
+
 			draw();
 			const sf::Texture& out = texture.getTexture();
 
 			Sprite sprite(out);
 			sprite.setPosition(pos);
+			
 			return sprite;
 		}
 		void draw() {
 
-			RectangleShape border;
-			RectangleShape fon;
-
+			BaseShape border;
+			BaseShape fon;
+		
 			Font font;
 			Text Text;
+		
+			border.setRads(rads);
+			fon.setRads(rads);
+			
 
 			font.loadFromFile(fontName);
 			Text.setString(text);
@@ -84,14 +107,13 @@ namespace UI {
 
 
 			border.setSize(Vector2f(size.x, size.y));
-			border.setPosition(0, 0);
+			border.setPosition(Vector2f(0, 0));
 
 			fon.setSize(Vector2f(size.x - 2 * bord, size.y - 2 * bord));
-			fon.setPosition(bord, bord);
-
+			fon.setPosition(Vector2f(bord, bord));
 			Text.setPosition(mar.x, mar.y);
 
-			if (isclicked) {
+			if (selected) {
 				fon.setFillColor(colors[0][2]);
 				border.setFillColor(colors[1][2]);
 				Text.setFillColor(colors[2][2]);
@@ -107,11 +129,14 @@ namespace UI {
 				Text.setFillColor(colors[2][0]);
 			}
 
-			texture.clear();
+			texture.clear(Color(0,0,0,0));
 
-			texture.draw(border);
-			texture.draw(fon);
+			texture.draw(border.create());
+			texture.draw(fon.create());
+
 			texture.draw(Text);
+
+
 			texture.display();
 
 

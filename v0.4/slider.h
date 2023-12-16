@@ -27,6 +27,7 @@ namespace UI {
 			this->mouseInf = mouseInf;
 			isHover();
 			isClicked();
+			isSelected();
 			drag();
 			if (angle) {
 				if (blockY) {
@@ -168,13 +169,13 @@ namespace UI {
 			pic.colors.push_back(this->colors[1]);
 
 		}
-		Sprite update(MouseInf mouseInf) {
+		Sprite update(InputInfo inputInf) {
 			
 
-			localMouse.pos.x = mouseInf.pos.x - pos.x;
-			localMouse.pos.y = mouseInf.pos.y - pos.y;
-			localMouse.clicked = mouseInf.clicked;
-			this->mouseInf = mouseInf;
+			localMouse.pos.x = inputInf.mouse.pos.x - pos.x;
+			localMouse.pos.y = inputInf.mouse.pos.y - pos.y;
+			localMouse.clicked = inputInf.mouse.clicked;
+			this->mouseInf = inputInf.mouse;
 			float pPos;
 			pic.update(localMouse, length);
 			

@@ -14,11 +14,11 @@ namespace UI {
 	public:
 
 
-		Vector2f size;
+		Vector2f size,pos;
 		vector<float> rads;
 		Color col;
 		RenderTexture texture;
-
+		BaseShape(){}
 		BaseShape(Vector2f size, vector<float> rads, Color col) {
 			this->size = size;
 			this->rads = rads;
@@ -26,17 +26,33 @@ namespace UI {
 			texture.create(size.x, size.y);
 		}
 		Sprite create() {
+			texture.create(size.x, size.y);
+
 			draw();
+
 			const sf::Texture& out = texture.getTexture();
 			Sprite sprite(out);
+			sprite.setPosition(pos);
 			return sprite;
+		}
+		void setSize(Vector2f size) {
+			this->size = size;
+		}
+		void setPosition(Vector2f pos) {
+			this->pos = pos;
+
+		}
+		void setFillColor(Color col) {
+			this->col = col;
+		}
+		void setRads(vector<float> rads) {
+			this->rads = rads;
 		}
 		void draw() {
 			RectangleShape top, botom, left, right, center;
 			CircleShape c1, c2, c3, c4;
 
 			float bs = rads[distance(rads.begin(), max_element(rads.begin(), rads.end()))];
-
 			c1.setOrigin(rads[0], rads[0]);
 			c2.setOrigin(rads[1], rads[1]);
 			c3.setOrigin(rads[2], rads[2]);
@@ -51,6 +67,12 @@ namespace UI {
 			c2.setRadius(rads[1]);
 			c3.setRadius(rads[2]);
 			c4.setRadius(rads[3]);
+
+
+			c1.setTextureRect(IntRect(0, rads[0], rads[0], rads[0]));
+			c2.setTextureRect(IntRect(rads[1], rads[1], rads[1], rads[1]));
+			c3.setTextureRect(IntRect(0, 0, rads[2], rads[2]));
+			c4.setTextureRect(IntRect(rads[3], 0, rads[3], rads[3]));
 
 
 			center.setPosition(bs, bs);
@@ -81,8 +103,7 @@ namespace UI {
 			center.setFillColor(col);
 
 			texture.clear(Color(0, 0, 0, 0));
-
-
+	
 
 			texture.draw(c1);
 			texture.draw(c2);

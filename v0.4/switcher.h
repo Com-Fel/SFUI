@@ -32,10 +32,10 @@ namespace UI {
 
 
 
-	class Swither : public Button {
+	class Switcher : public Button {
 	public:
 		bool canChange;
-		Swither(Vector2f pos, Vector2f size, Vector2f mar, int bord, vector<vector<Color>> colors, int fontSize, string fontName, string tag, string text) {
+		Switcher(Vector2f pos, Vector2f size, Vector2f mar, int bord, vector<vector<Color>> colors, int fontSize, string fontName, string tag, string text) {
 			this->pos = pos;
 			this->size = size;
 			this->mar = mar;
@@ -48,7 +48,7 @@ namespace UI {
 			texture.create(size.x, size.y);
 
 		}
-		Swither(Vector2f pos, Vector2f size, SwitcherStyle style, string tag, string text) {
+		Switcher(Vector2f pos, Vector2f size, SwitcherStyle style, string tag, string text) {
 			this->pos = pos;
 			this->size = size;
 			this->mar = style.mar;
@@ -77,8 +77,8 @@ namespace UI {
 			return isclicked;
 
 		}
-		Sprite update(MouseInf mouseInf) {
-			this->mouseInf = mouseInf;
+		Sprite update(InputInfo inputInf) {
+			this->mouseInf = inputInf.mouse;
 			isHover();
 			if (!ishov) {
 				canChange = true;

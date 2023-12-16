@@ -13,19 +13,7 @@ namespace basic {
 		return pp[distance(pp.begin(), min_element(pp.begin(), pp.end()))];
 	}
 
-	class MouseInf {
-	public:
-		bool clicked = false;
-		int scroll = 0;
-		Vector2i pos;
-		MouseInf() {}
-		MouseInf(Vector2i pos, bool clicked) {
-			this->pos.x = pos.x;
-			this->pos.y = pos.y;
-
-			this->clicked = clicked;
-		}
-	};
+	
 
 
 	class base {
@@ -33,7 +21,9 @@ namespace basic {
 		Vector2f pos, size, mar;
 		RenderTexture texture;
 		string  tag;
+		bool enabled = true;
 		int id;
+		int Zpos;
 		base(){}
 		Sprite update() {};
 		Vector2f getPos() {
@@ -46,12 +36,14 @@ namespace basic {
 			return size;
 		}
 		void setSize(Vector2f size) {
+			texture.create(size.x, size.y);
+
 			this->size = size;
 		}
 		Vector2f getMargin() {
 			return mar;
 		}
-		Vector2f setMargin(Vector2f mar) {
+		void setMargin(Vector2f mar) {
 			this->mar = mar;
 		}
 
@@ -59,9 +51,13 @@ namespace basic {
 
 	class Clickable: public base {
 	public:
-		bool ishov, isclicked, selected;
+		bool ishov, isclicked, selected, chosen;
 		MouseInf mouseInf;
 		MouseInf localMouseInf;
+		InputInfo localInf;
+		vector<float> rads;
+
+
 		Sprite sprite;
 		bool isClicked() {
 
@@ -82,8 +78,7 @@ namespace basic {
 			int my = mouseInf.pos.y;
 			int sx = size.x;
 			int  sy = size.y;
-			
-			if (((pos.x < mx && mx < pos.x + sx) && (pos.y < my && my < pos.y + sy))&&(!mouseInf.clicked||ishov)) {
+			if ((((pos.x < mx && mx < pos.x + sx) && (pos.y < my && my < pos.y + sy))&&(!mouseInf.clicked||ishov))&&enabled) {
 				ishov = true;
 				return true;
 			}
@@ -91,6 +86,32 @@ namespace basic {
 				ishov = false;
 				return false;
 			}
+
+		}
+		bool isSelected() {
+			if (isclicked||selected) {
+				selected = true;
+
+			}
+
+			if (!mouseInf.clicked) {
+				selected = false;
+
+			}
+			return selected;
+
+		}
+		bool isChosen() {
+			if (selected||isclicked) {
+				chosen = true;
+
+			}
+			if (mouseInf.clicked && !(selected || isclicked)) {
+				chosen = false;
+
+			}
+			
+			return chosen;
 
 		}
 	};
@@ -129,7 +150,7 @@ namespace basic {
 	};
 	class Dragable:public Clickable{
 	public:
-		bool blockX, blockY =  false;
+		bool blockX = false, blockY =  false;
 		Vector2i correct;
 		void drag() {
 			if (!selected) {

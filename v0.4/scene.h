@@ -1,41 +1,36 @@
 #pragma once
 
-#include<iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include "basic.h"
 #include "UI.h"
 using namespace sf;
 using namespace UI;
 
 namespace UI {
-	class Scene:public base, public Colored {
+	class Scene :public Group {
 	public:
-		vector<Button*> buttons;
-		vector<Label*> labels;
-		vector<ImageBox*> images;
-		vector<Textbox*> textboxes;
-		MouseInf localMouse;
+		vector<LocalWindow*> windows;
 
-		string input;
-		Scene(Vector2f pos, Vector2f size, Color color) {
-			this->pos = pos;
+		Scene(Vector2f size, Color color) {
+			this->pos = Vector2f(0, 0);
 			this->size = size;
-			colors.push_back({});
-			colors[0].push_back(color);
-
+			colors.push_back({ color });
 			texture.create(size.x, size.y);
 
 		}
-		Sprite update(MouseInf mouse, string inp) {
-			localMouse.pos.x = mouse.pos.x - pos.x;
-			localMouse.pos.y = mouse.pos.y - pos.y;
-			localMouse.clicked = mouse.clicked;
-			input = inp;
+		Sprite update(InputInfo inf) {
+			this->mouseInf = inf.mouse;
+
+			//offset.y += inf.mouse.scroll;
+			localMouse.pos.x = inf.mouse.pos.x - pos.x - offset.x;
+			localMouse.pos.y = inf.mouse.pos.y - pos.y - offset.y;
+			localMouse.clicked = inf.mouse.clicked;
+			input = inf.keyboardInput;
+			localInf.update(inf.evt, localMouse.pos);
+			localInf.keyboardInput = inf.keyboardInput;
 
 
+			isHover();
+			isClicked();
+			isSelected();
 			draw();
 
 			const sf::Texture& out = texture.getTexture();
@@ -44,26 +39,34 @@ namespace UI {
 
 			return sprite;
 		}
+
+
+		template<typename elems>
+		void drawElem(elems el) {
+			for (int i = 0;i < el.size();i++) {
+				Vector2f p = el[i]->getPos();
+				Sprite tempTexture = el[i]->update(localInf);
+				tempTexture.setPosition(p.x + offset.x, p.y + offset.y);
+				texture.draw(tempTexture);
+			}
+		}
+
+
 		void draw() {
 
-
+			InputInfo inp;
 
 			texture.clear(colors[0][0]);
-			for (int i = 0;i < buttons.size();i++) {
-				texture.draw(buttons[i]->update(localMouse));
-			}
-			for (int i = 0;i < labels.size();i++) {
-				texture.draw(labels[i]->update());
 
-			}
-			for (int i = 0;i < images.size();i++) {
-				texture.draw(images[i]->update());
+			drawElem(buttons);
+			drawElem(labels);
+			drawElem(images);
+			drawElem(textboxes);
+			drawElem(groups);
+			drawElem(sliders);
+			drawElem(switchers);
+			drawElem(windows);
 
-			}
-			for (int i = 0;i < textboxes.size();i++) {
-				texture.draw(textboxes[i]->update(localMouse, input));
-
-			}
 			texture.display();
 
 		}
@@ -82,6 +85,20 @@ namespace UI {
 			textboxes.push_back(tb);
 
 		}
+		void append(Group* gr) {
+			groups.push_back(gr);
+
+		}
+		void append(Slider* sl) {
+			sliders.push_back(sl);
+
+		}
+		void append(Switcher* sw) {
+			switchers.push_back(sw);
+
+		}
+		void append(LocalWindow* lw) {
+			windows.push_back(lw);
+		}
 	};
-	
 }

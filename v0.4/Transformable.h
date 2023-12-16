@@ -120,16 +120,16 @@ namespace UI {
 			
 		}
 
-		Sprite update(MouseInf mouseInf) {
+		Sprite update(InputInfo inputInf) {
 		
 
-			this->mouseInf.pos.x = mouseInf.pos.x ;
-			this->mouseInf.pos.y = mouseInf.pos.y ;
-			this->mouseInf.clicked = mouseInf.clicked;
+			this->mouseInf.pos.x = inputInf.mouse.pos.x ;
+			this->mouseInf.pos.y = inputInf.mouse.pos.y ;
+			this->mouseInf.clicked = inputInf.mouse.clicked;
 
-			this->localMouseInf.pos.x = mouseInf.pos.x - pos.x;
-			this->localMouseInf.pos.y = mouseInf.pos.y - pos.y;
-			this->localMouseInf.clicked = mouseInf.clicked;
+			this->localMouseInf.pos.x = inputInf.mouse.pos.x - pos.x;
+			this->localMouseInf.pos.y = inputInf.mouse.pos.y - pos.y;
+			this->localMouseInf.clicked = inputInf.mouse.clicked;
 			
 			
 			isHover();
@@ -154,13 +154,7 @@ namespace UI {
 			size.x = point.pos.x + point.size.x;
 			size.y = point.pos.y + point.size.y;
 
-
-		
-
-
-
 			draw();
-
 
 			const sf::Texture& out = texture.getTexture();
 			
@@ -182,10 +176,13 @@ namespace UI {
 			texture.draw(p);
 			
 			Sprite sr1, sr2, sr3, sr4;
-			sr1 = r1.update(localMouseInf);
-			sr2 = r2.update(localMouseInf);
-			sr3 = r3.update(localMouseInf);
-			sr4 = r4.update(localMouseInf);
+			InputInfo inf;
+			inf.mouse = localMouseInf;
+
+			sr1 = r1.update(inf);
+			sr2 = r2.update(inf);
+			sr3 = r3.update(inf);
+			sr4 = r4.update(inf);
 
 			rads[0]->setPos(Vector2f(size.x / 10, size.y / 10));
 			rads[1]->setPos(Vector2f(size.x - size.x / 10-  sr2.getTextureRect().width , size.y / 10));

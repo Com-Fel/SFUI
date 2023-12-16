@@ -29,7 +29,7 @@ namespace UI {
 
 	class Label : public base, public Colored, public Texteble {
 	public:
-		
+		Label(){}
 		Label(Vector2f pos, Vector2f mar,vector<Color> colors, string fontName,int fontSize, string text) {
 			this->colors.push_back(colors);
 			this->fontName = fontName;
@@ -48,7 +48,7 @@ namespace UI {
 			this->mar = style.mar;
 			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
 		}
-		Sprite update() {
+		Sprite update(InputInfo inputInf) {
 			draw();
 			const sf::Texture& out = texture.getTexture();
 
@@ -75,6 +75,7 @@ namespace UI {
 
 		}
 		void setText(string text) {
+
 			this->text = text;
 			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
 
