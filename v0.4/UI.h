@@ -11,6 +11,7 @@
 #include "basic.h"
 #include "baseshape.h"
 
+
 #include "Button.h"
 #include "label.h"
 #include "image.h"
@@ -21,7 +22,11 @@
 #include "Transformable.h"
 #include "gradient.h"
 
-
 #include "group.h"
 #include "window.h"
+#include "contextMenu.h"
+#include "standartStyles.h"
 #include "scene.h"
+
+
+#include "baseshape.h"

@@ -12,12 +12,14 @@ using namespace basic;
 namespace UI {
 
 	class ButtonStyle {
+
 	public:
 		Vector2f mar;
 		int bord, fontSize;
 		vector<vector<Color>> colors;
 		string fontName;
 		vector<float> rads;
+		
 		ButtonStyle() {}
 		ButtonStyle(vector<vector<Color>> colors, int bord, Vector2f mar, int fontSize, string fontName, vector<float> rads) {
 			this->bord = bord;
@@ -31,6 +33,10 @@ namespace UI {
 	class Button: public Clickable, public Texteble, public Colored, public Bordered {
 		
 	public:
+		BaseShape border;
+		BaseShape fon;
+
+		Font font;
 		Button(){}
 		Button(Vector2f pos, Vector2f size, Vector2f mar, int bord, vector<vector<Color>> colors, int fontSize, string fontName, string tag, string text) {
 			this->pos = pos;
@@ -56,7 +62,9 @@ namespace UI {
 			this->rads = style.rads;
 			this->tag = tag;
 			this->text = text;
-
+			font.loadFromFile(fontName);
+			Text.setString(text);
+			Text.setFont(font);
 			texture.create(size.x, size.y);
 		}
 		void Create(Vector2f pos, Vector2f size, ButtonStyle style, string tag, string text) {
@@ -70,7 +78,9 @@ namespace UI {
 			this->rads = style.rads;
 			this->tag = tag;
 			this->text = text;
-			
+			font.loadFromFile(fontName);
+			Text.setString(text);
+			Text.setFont(font);
 			texture.create(size.x, size.y);
 		}
 		Sprite update(InputInfo inf) {
@@ -89,19 +99,13 @@ namespace UI {
 		}
 		void draw() {
 
-			BaseShape border;
-			BaseShape fon;
 		
-			Font font;
-			Text Text;
-		
+			
 			border.setRads(rads);
 			fon.setRads(rads);
 			
 
-			font.loadFromFile(fontName);
-			Text.setString(text);
-			Text.setFont(font);
+			
 			Text.setCharacterSize(fontSize);
 			Text.setPosition(mar.x, mar.y);
 

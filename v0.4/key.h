@@ -39,6 +39,8 @@ namespace basic {
     class MouseInf {
     public:
         bool clicked = false;
+        bool clickedRight = false;
+
         int scroll = 0;
 
         Vector2i pos;
@@ -52,7 +54,7 @@ namespace basic {
     };
     class InputInfo {
     public:
-         
+        bool rightClickBlock = false;
         string keyboardInput = "";
         MouseInf mouse;
         sf::Event evt;
@@ -80,12 +82,28 @@ namespace basic {
                 if (evt.mouseButton.button == sf::Mouse::Left) {
                     mouse.clicked = true;
                 }
+                if (evt.mouseButton.button == sf::Mouse::Right && !rightClickBlock) {
+                    mouse.clickedRight = true;
+                    rightClickBlock = true;
+                }
+            }
+            else {
+                mouse.clickedRight = false;
 
+            
             }
             if (evt.type == sf::Event::MouseButtonReleased) {
                 if (evt.mouseButton.button == sf::Mouse::Left) {
                     mouse.clicked = false;
+
                 }
+                if (evt.mouseButton.button == sf::Mouse::Right) {
+                    mouse.clickedRight = false;
+                    rightClickBlock = false;
+
+                }
+
+
             }
             mouse.scroll = 0;
 

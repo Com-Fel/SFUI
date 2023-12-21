@@ -27,7 +27,7 @@ namespace UI {
 
 	class LocalWindow:public Colored, public Dragable{
 	public:
-		int topMenuSize = 17;
+		int topMenuSize = 20;
 
 		int margin = 1;
 		int buttonMargin = margin;
@@ -73,11 +73,13 @@ namespace UI {
 
 		}
 		void init(LocalWindowStyle style) {
-			this->name.fontName = style.fontName;
-			this->name.fontSize = style.fontSize;
-			this->name.colors = { { colors[2]} };
-			this->name.setText(windowName);
-			this->name.setPos(Vector2f(margin + 5, 0));
+			LabelStyle st(Vector2f(0,0), { { colors[2]} }, style.fontName, style.fontSize);
+			name.Create(Vector2f(margin + 5, 0),st, windowName);
+			//this->name.fontName = style.fontName;
+			//this->name.fontSize = style.fontSize;
+			//this->name.colors = { { colors[2]} };
+			//this->name.setText(windowName);
+			//this->name.setPos();
 
 
 			topMenu.setSize(Vector2f(size.x, topMenuSize));
@@ -90,8 +92,8 @@ namespace UI {
 			workSpace.colors = { { colors[0][0] } };
 
 
-			close.Create(Vector2f(size.x - topMenuSize, 1), Vector2f(topMenuSize - 2, topMenuSize - 2), style.closeStyle, "close", "");
-			hide.Create(Vector2f(size.x - topMenuSize * 2, 1), Vector2f(topMenuSize - 2, topMenuSize - 2), style.hideStyle, "hide", "");
+			close.Create(Vector2f(size.x - topMenuSize, 1), Vector2f(topMenuSize - 2, topMenuSize - 2), style.closeStyle, "close", "x");
+			hide.Create(Vector2f(size.x - topMenuSize * 2, 1), Vector2f(topMenuSize - 2, topMenuSize - 2), style.hideStyle, "hide", "-");
 			topMenu.append(&name);
 			topMenu.append(&close);
 			topMenu.append(&hide);
@@ -173,7 +175,18 @@ namespace UI {
 		void update(InputInfo inf) {
 			this->localInf = inf;
 
-			sort();
+			
+
+
+			for (int i = 0;i < windows.size();i++) {
+				if (windows[i]->topMenu.buttons[0]->isclicked) {
+					delete windows[i];
+					windows.erase(windows.begin()+i);
+					for (int j = i;j < windows.size();j++) {
+						windows[j]->Zpos--;
+					}
+				}
+			}
 			bool canSelected = true;
 			for (int i = 0;i <windows.size();i++) {
 				windows[i]->enabled = canSelected;
@@ -181,7 +194,7 @@ namespace UI {
 					canSelected = false;
 				}
 			}
-
+			sort();
 			draw();
 
 
@@ -197,13 +210,15 @@ namespace UI {
 				
 
 				texture.draw(windows[i]->update(localInf));
+				
+
 			}
 			texture.display();
 		}
 		void sort() {
 			for (int i = 1;i < windows.size();i++) {
 				if (windows[i]->Zpos == 0) {
-
+					
 					vector<LocalWindow*> TempWindows = windows;
 					for (int j = 0;j < windows.size();j++) {
 						if (j<i) {

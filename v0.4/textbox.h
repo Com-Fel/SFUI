@@ -47,6 +47,8 @@ namespace UI {
 			this->fontName = fontName;
 			this->fontSize = fontSize;
 			this->placeHolder = placeHolder;
+			font.loadFromFile(fontName);
+
 			texture.create(size.x,size.y);
 			instr = size.x*1.3/ fontSize;
 		}
@@ -59,6 +61,8 @@ namespace UI {
 			this->fontName = style.fontName;
 			this->fontSize = style.fontSize;
 			this->placeHolder = placeHolder;
+			font.loadFromFile(fontName);
+
 			texture.create(size.x, size.y);
 			instr = size.x * 1.3 / fontSize;
 		}
@@ -138,10 +142,7 @@ namespace UI {
 			RectangleShape border;
 			RectangleShape fon;
 
-			Font font;
-			Text Text;
 			
-			font.loadFromFile(fontName);
 			Text.setString(text);
 			Text.setFont(font);
 			Text.setCharacterSize(fontSize);

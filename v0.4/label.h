@@ -29,6 +29,8 @@ namespace UI {
 
 	class Label : public base, public Colored, public Texteble {
 	public:
+		Font font;
+		
 		Label(){}
 		Label(Vector2f pos, Vector2f mar,vector<Color> colors, string fontName,int fontSize, string text) {
 			this->colors.push_back(colors);
@@ -37,7 +39,10 @@ namespace UI {
 			this->pos = pos;
 			this->fontSize = fontSize;
 			this->mar = mar;
+			font.loadFromFile(fontName);
+
 			texture.create(fontSize*(text.length()+1)/2+mar.x*2, fontSize*1.3+mar.y*2);
+
 		}
 		Label(Vector2f pos, LabelStyle style, string text) {
 			this->colors = style.colors;
@@ -46,6 +51,19 @@ namespace UI {
 			this->pos = pos;
 			this->fontSize = style.fontSize;
 			this->mar = style.mar;
+			font.loadFromFile(style.fontName);
+
+			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
+		}
+		void Create(Vector2f pos, LabelStyle style, string text) {
+			this->colors = style.colors;
+			this->fontName = style.fontName;
+			this->text = text;
+			this->pos = pos;
+			this->fontSize = style.fontSize;
+			this->mar = style.mar;
+			font.loadFromFile(style.fontName);
+
 			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
 		}
 		Sprite update(InputInfo inputInf) {
@@ -57,10 +75,8 @@ namespace UI {
 			return sprite;
 		}
 		void draw() {
-			Font font;
-			Text Text;
+			
 
-			font.loadFromFile(fontName);
 			Text.setString(text);
 			Text.setFont(font);
 			Text.setCharacterSize(fontSize);

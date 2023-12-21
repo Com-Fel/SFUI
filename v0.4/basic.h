@@ -20,6 +20,7 @@ namespace basic {
 	public:
 		Vector2f pos, size, mar;
 		RenderTexture texture;
+		Sprite sprite;
 		string  tag;
 		bool enabled = true;
 		int id;
@@ -56,9 +57,12 @@ namespace basic {
 		MouseInf localMouseInf;
 		InputInfo localInf;
 		vector<float> rads;
+		MouseInf localMouse;
 
+		string input;
+		
 
-		Sprite sprite;
+		
 		bool isClicked() {
 
 			if (ishov && mouseInf.clicked) {
@@ -119,7 +123,8 @@ namespace basic {
 	public:
 		string text, fontName;
 		int fontSize;
-
+		Font font;
+		Text Text;
 		string getText() {
 			return text;
 		}
