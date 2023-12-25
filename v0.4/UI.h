@@ -11,7 +11,6 @@
 #include "basic.h"
 #include "baseshape.h"
 
-
 #include "Button.h"
 #include "label.h"
 #include "image.h"
@@ -27,6 +26,5 @@
 #include "contextMenu.h"
 #include "standartStyles.h"
 #include "scene.h"
-
 
 #include "baseshape.h"

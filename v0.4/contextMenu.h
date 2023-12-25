@@ -69,7 +69,7 @@ namespace UI {
 			input = inf.keyboardInput;
 			localInf.update(inf.evt, localMouse.pos);
 			localInf.keyboardInput = inf.keyboardInput;
-
+			updateClickableInfo();
 			draw();
 
 			const Texture& out = texture.getTexture();
@@ -106,6 +106,8 @@ namespace UI {
 				activeMenu = true;
 				menu.init(Vector2f(inf.mouse.pos.x, inf.mouse.pos.y), style);
 				menu.show({"Create new","Delete","Save file","Create new file","Close window"});
+				
+
 			}
 			if (inf.mouse.clicked) {
 				activeMenu = false;

@@ -72,9 +72,7 @@ namespace UI {
 
 			input = inputInf.keyboardInput;
 
-			isHover();
-			isClicked();
-			isSelected();
+			updateClickableInfo();
 			
 			txt();
 			

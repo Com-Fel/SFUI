@@ -83,7 +83,7 @@ namespace UI {
 			if (!ishov) {
 				canChange = true;
 			}
-			isClicked();
+			updateClickableInfo();
 
 			draw();
 			const sf::Texture& out = texture.getTexture();

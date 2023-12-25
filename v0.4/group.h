@@ -45,9 +45,8 @@ namespace UI {
 			localInf.keyboardInput = inf.keyboardInput;
 
 
-			isHover();
-			isClicked();
-			isSelected();
+			updateClickableInfo();
+
 			draw();
 
 			const sf::Texture& out = texture.getTexture();

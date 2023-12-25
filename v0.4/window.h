@@ -118,14 +118,12 @@ namespace UI {
 			localInf.keyboardInput = inf.keyboardInput;
 
 			MainGroup.enabled = enabled;
-			isHover();
-			isClicked(); 
-			isChosen();
-
+			updateClickableInfo();
 
 			if (topMenu.selected) {
 				drag();
 			}
+			
 
 			if (chosen) {
 				Zpos = 0;
@@ -172,6 +170,7 @@ namespace UI {
 			windows.push_back(new LocalWindow(pos, size, name, style));
 			windows[windows.size() - 1]->Zpos = windows.size() - 1;
 		}
+	
 		void update(InputInfo inf) {
 			this->localInf = inf;
 

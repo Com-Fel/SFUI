@@ -52,7 +52,7 @@ namespace basic {
 
 	class Clickable: public base {
 	public:
-		bool ishov, isclicked, selected, chosen;
+		bool ishov, isclicked, selected, chosen,pressed,blockPress;
 		MouseInf mouseInf;
 		MouseInf localMouseInf;
 		InputInfo localInf;
@@ -62,21 +62,36 @@ namespace basic {
 		string input;
 		
 
-		
-		bool isClicked() {
+		bool isPressed() {
 
 			if (ishov && mouseInf.clicked) {
+				if (pressed) {
+					blockPress = true;
+				}
+				pressed = true;
+
+			}
+			else {
+				pressed = false;
+				blockPress = false;
+
+			}
+
+			return pressed;
+
+		}
+		bool isClicked() {
+
+			if (pressed&&!blockPress) {
 				isclicked = true;
 			}
 			else {
 				isclicked = false;
 
-			}			
-
+			}
 			return isclicked;
-
 		}
-
+		
 		bool isHover() {
 			int mx = mouseInf.pos.x;
 			int my = mouseInf.pos.y;
@@ -93,30 +108,37 @@ namespace basic {
 
 		}
 		bool isSelected() {
-			if (isclicked||selected) {
+			if (pressed||selected) {
 				selected = true;
-
 			}
 
 			if (!mouseInf.clicked) {
 				selected = false;
 
 			}
+
 			return selected;
 
 		}
 		bool isChosen() {
-			if (selected||isclicked) {
+			if (selected||pressed) {
 				chosen = true;
 
 			}
-			if (mouseInf.clicked && !(selected || isclicked)) {
+			if (mouseInf.clicked && !(selected || pressed)) {
 				chosen = false;
 
 			}
 			
 			return chosen;
 
+		}
+		void updateClickableInfo() {
+			isHover();
+			isPressed();
+			isClicked();
+			isSelected();
+			isChosen();
 		}
 	};
 	class Texteble {
@@ -155,18 +177,19 @@ namespace basic {
 	};
 	class Dragable:public Clickable{
 	public:
-		bool blockX = false, blockY =  false;
+		bool blockX = false, blockY =  false,firstDrag = true;
 		Vector2i correct;
 		void drag() {
-			if (!selected) {
+			if (firstDrag) {
 				if (!blockX) {
 					correct.x = pos.x - mouseInf.pos.x;
 				}
 				if (!blockY) {
 					correct.y = pos.y - mouseInf.pos.y;
 				}
+				firstDrag = false;
 			}
-			if (isclicked|| selected) {
+			if (pressed|| selected) {
 				selected = true;
 				if (blockX) {
 					setPos(Vector2f(pos.x, (mouseInf.pos.y + correct.y)));
@@ -184,7 +207,7 @@ namespace basic {
 			}
 			if(!mouseInf.clicked) {
 				selected = false;
-
+				firstDrag = true;
 			}
 		}
 

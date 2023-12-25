@@ -37,6 +37,9 @@ namespace UI {
 		BaseShape fon;
 
 		Font font;
+
+		typedef void (*onClick)();
+		onClick onClickFunction;
 		Button(){}
 		Button(Vector2f pos, Vector2f size, Vector2f mar, int bord, vector<vector<Color>> colors, int fontSize, string fontName, string tag, string text) {
 			this->pos = pos;
@@ -62,6 +65,10 @@ namespace UI {
 			this->rads = style.rads;
 			this->tag = tag;
 			this->text = text;
+
+			
+
+
 			font.loadFromFile(fontName);
 			Text.setString(text);
 			Text.setFont(font);
@@ -85,10 +92,10 @@ namespace UI {
 		}
 		Sprite update(InputInfo inf) {
 			this->mouseInf = inf.mouse;
-			isHover();
-			isClicked();
-			isSelected();
-
+			updateClickableInfo();
+			if (isclicked) {
+				onClickFunction();
+			}
 			draw();
 			const sf::Texture& out = texture.getTexture();
 
@@ -145,6 +152,7 @@ namespace UI {
 
 
 		}
+		
 	};
 
 

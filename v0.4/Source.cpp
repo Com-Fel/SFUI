@@ -1,4 +1,3 @@
-
 #include "SFUI/UI.h"
 
 
@@ -16,24 +15,31 @@ int main() {
     settings.antialiasingLevel = 0;
 
     RenderWindow window(VideoMode(1920, 1080), "SFMLworks", Style::Default, settings);
-    window.setFramerateLimit(60); 
+    window.setFramerateLimit(60);
 
-    
-    
+
+    Button testBut(Vector2f(50, 50), Vector2f(100, 100), StandartContextMenuButtonStyle, "", "Click");
+  
+
     WindowsRenderer windowsRenderer(Vector2f(window.getSize().x, window.getSize().y));
-    windowsRenderer.createNewWindow(Vector2f(100,130), Vector2f(600, 500),"Test1", StandartWindowStyle);
+    windowsRenderer.createNewWindow(Vector2f(100, 130), Vector2f(600, 500), "Test1", StandartWindowStyle);
     windowsRenderer.createNewWindow(Vector2f(100, 110), Vector2f(300, 300), "Test2", StandartWindowStyle);
     windowsRenderer.createNewWindow(Vector2f(100, 90), Vector2f(300, 300), "Test3", StandartWindowStyle);
     windowsRenderer.createNewWindow(Vector2f(100, 70), Vector2f(300, 300), "Test4", StandartWindowStyle);
     windowsRenderer.createNewWindow(Vector2f(100, 50), Vector2f(300, 300), "qweqwe", StandartWindowStyle);
+    
+    windowsRenderer.windows[0]->append(&testBut);
 
-   
+
     Scene mainScene(Vector2f(1920, 1080), Color(0, 0, 0));
     InputInfo inputInfo;
-    ContextMenu testMen(Vector2f(100,100),StandartContextMenuStyle);
+   
     ContextMenuRenderer contextMenuRenderer(Vector2f(1920, 1080), StandartContextMenuStyle);
+  
+
     while (window.isOpen())
     {
+        
 
         string inp = "";
         
