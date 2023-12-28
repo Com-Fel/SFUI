@@ -11,7 +11,7 @@ using namespace basic;
 
 namespace UI {
 
-	class ButtonStyle {
+	class ButtonStyle:public Style {
 
 	public:
 		Vector2f mar;
@@ -39,7 +39,7 @@ namespace UI {
 		Font font;
 
 		typedef void (*onClick)();
-		onClick onClickFunction;
+		onClick onClickFunction = EmptyFunction;
 		Button(){}
 		Button(Vector2f pos, Vector2f size, Vector2f mar, int bord, vector<vector<Color>> colors, int fontSize, string fontName, string tag, string text) {
 			this->pos = pos;

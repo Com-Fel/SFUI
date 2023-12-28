@@ -28,9 +28,9 @@ namespace UI{
 							{Color(40,40,40),Color(80,80,80)}  }, closeStyle, hideStyle);
 
 
-    ButtonStyle StandartContextMenuButtonStyle({{ Color(25,25,25)  ,Color(100,100,100)  ,Color(120,120,120)   },
-                                                { Color(150,150,150)   ,Color(150,150,150)  ,Color(150,150,150)   },
-                                                { Color(255,255,255) ,Color(255,255,255),Color(255,255,255)} },
+    ButtonStyle StandartContextMenuButtonStyle({{ Color(25,25,25)    ,Color(100,100,100)  ,Color(120,120,120) },
+                                                { Color(150,150,150) ,Color(150,150,150)  ,Color(150,150,150) },
+                                                { Color(255,255,255) ,Color(255,255,255)  ,Color(255,255,255)}},
                                                 1, Vector2f(15, 1), 12, standartFont, { 0,0,0,0 });
 
     ContextMenuStyle StandartContextMenuStyle(250,20,1,Color(120,120,120), StandartContextMenuButtonStyle);

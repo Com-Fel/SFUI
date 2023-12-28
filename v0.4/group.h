@@ -122,6 +122,22 @@ namespace UI {
 
 		}
 		
+		void createButton(Vector2f pos,Vector2f size, ButtonStyle style, string tag,string text) {
+			append(new Button(pos,size,style,tag,text));
+		}
+		void createLabel(Vector2f pos, LabelStyle style, string text) {
+			append(new Label(pos, style, text));
+
+		}
+		void createImageBox(Vector2f pos, Vector2f size, string path) {
+			append(new ImageBox(pos, size, path));
+		}
+		void createTextbox(Vector2f pos, Vector2f size, string placeHolder, TextboxStyle style) {
+			append(new Textbox(pos, size, placeHolder, style));
+		}
+		void createGroup(Vector2f pos, Vector2f size, Color color) {
+			append(new Group(pos,size,color));
+		}
 		
 
 	};

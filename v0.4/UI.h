@@ -8,6 +8,8 @@
 #include <SFML/Window/Cursor.hpp>
 
 #include "key.h"
+#include "fileParser.h"
+
 #include "basic.h"
 #include "baseshape.h"
 
@@ -28,3 +30,5 @@
 #include "scene.h"
 
 #include "baseshape.h"
+
+

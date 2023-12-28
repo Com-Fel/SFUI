@@ -8,7 +8,7 @@ using namespace sf;
 
 namespace UI {
 
-	class ContextMenuStyle:public Colored {
+	class ContextMenuStyle: public Style{
 	public:
 		ButtonStyle buttonStyle;
 		int buttonWidth;

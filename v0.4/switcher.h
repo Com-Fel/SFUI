@@ -10,7 +10,7 @@ using namespace basic;
 
 namespace UI {
 
-	class SwitcherStyle{
+	class SwitcherStyle : public Style {
 	public:
 		Vector2f mar;
 		int bord, fontSize; 

@@ -10,7 +10,7 @@ using namespace basic;
 
 namespace UI {
 
-	class TextboxStyle {
+	class TextboxStyle : public Style {
 
 
 
@@ -86,13 +86,13 @@ namespace UI {
 		}
 		void txt() {
 			
-			if (input != "" || !selected) {
+			if (input != "" || !chosen) {
 				if (!stText.empty() && text[text.length() - 1] == '|') {
 					text.pop_back();
 				}
 			}
 			if (input != "DELETE2") {
-				if (selected) {
+				if (chosen) {
 					stText += input;
 				}
 			}
@@ -114,7 +114,7 @@ namespace UI {
 
 			}
 			text = temp;
-			if (selected) {
+			if (chosen) {
 				ticker -= 1;
 				if (ticker > 0) {
 					text += '|';
@@ -154,7 +154,7 @@ namespace UI {
 			fon.setSize(Vector2f(size.x -(b + b2)*2, size.y - (b + b2) * 2));
 			
 
-			if (selected) {
+			if (chosen) {
 				texture.clear(colors[1][0]);
 				fon.setFillColor(colors[1][1]);
 				border.setFillColor(colors[1][2]);

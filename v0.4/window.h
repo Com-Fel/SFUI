@@ -8,7 +8,7 @@ using namespace sf;
 
 namespace UI {
 	
-	class LocalWindowStyle {
+	class LocalWindowStyle : public Style {
 	public:
 		string fontName;
 		int fontSize; 
@@ -179,7 +179,7 @@ namespace UI {
 
 			for (int i = 0;i < windows.size();i++) {
 				if (windows[i]->topMenu.buttons[0]->isclicked) {
-					delete windows[i];
+					//delete windows[i]; // =========================================================================ERROR
 					windows.erase(windows.begin()+i);
 					for (int j = i;j < windows.size();j++) {
 						windows[j]->Zpos--;

@@ -13,8 +13,23 @@ namespace basic {
 		return pp[distance(pp.begin(), min_element(pp.begin(), pp.end()))];
 	}
 
-	
+	void EmptyFunction(){}
 
+
+	class Style {
+	public:
+		string tag;
+		Vector2f mar;
+		int bord, fontSize;
+		vector<vector<Color>> colors;
+		string fontName;
+		vector<float> rads;
+		Style() {};
+		Style(RawStyle Rstyle) {
+			
+		}
+
+	};
 
 	class base {
 	public:
