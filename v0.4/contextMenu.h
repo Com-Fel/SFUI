@@ -8,7 +8,7 @@ using namespace sf;
 
 namespace UI {
 
-	class ContextMenuStyle: public Style{
+	class ContextMenuStyle: public StyleSheet {
 	public:
 		ButtonStyle buttonStyle;
 		int buttonWidth;
@@ -57,7 +57,7 @@ namespace UI {
 				texture.create(style.buttonWidth + style.borderSize*2, style.buttonLength* var.size() + style.borderSize - style.buttonStyle.bord * i);
 
 			}
-			cout << "a";
+		
 		}
 		Sprite update(InputInfo inf) {
 			this->mouseInf = inf.mouse;

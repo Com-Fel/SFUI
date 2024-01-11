@@ -8,7 +8,7 @@ using namespace sf;
 
 namespace UI {
 	
-	class LocalWindowStyle : public Style {
+	class LocalWindowStyle : public StyleSheet {
 	public:
 		string fontName;
 		int fontSize; 
@@ -73,7 +73,7 @@ namespace UI {
 
 		}
 		void init(LocalWindowStyle style) {
-			LabelStyle st(Vector2f(0,0), { { colors[2]} }, style.fontName, style.fontSize);
+			StyleSheet st("windowName", { {colors[2]} }, 0, Vector2f(0, 0), style.fontSize, style.fontName, { 0,0,0,0 });
 			name.Create(Vector2f(margin + 5, 0),st, windowName);
 			//this->name.fontName = style.fontName;
 			//this->name.fontSize = style.fontSize;

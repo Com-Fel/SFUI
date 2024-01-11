@@ -100,3 +100,4 @@ namespace UI {
 		}
 	};
 }
+Scene mainScene(Vector2f(1920, 1080), Color(0, 0, 0));

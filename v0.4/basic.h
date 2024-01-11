@@ -5,7 +5,7 @@ using namespace std;
 
 using namespace sf;
 namespace basic {
-
+	
 	float max(vector<float> pp) {
 		return pp[distance(pp.begin(), max_element(pp.begin(), pp.end()))];
 	}
@@ -16,20 +16,7 @@ namespace basic {
 	void EmptyFunction(){}
 
 
-	class Style {
-	public:
-		string tag;
-		Vector2f mar;
-		int bord, fontSize;
-		vector<vector<Color>> colors;
-		string fontName;
-		vector<float> rads;
-		Style() {};
-		Style(RawStyle Rstyle) {
-			
-		}
-
-	};
+	
 
 	class base {
 	public:
@@ -71,12 +58,13 @@ namespace basic {
 		MouseInf mouseInf;
 		MouseInf localMouseInf;
 		InputInfo localInf;
-		vector<float> rads;
+		vector<float> rads = { 0,0,0,0 };
 		MouseInf localMouse;
 
 		string input;
 		
-
+		typedef void (*onClick)();
+		onClick onClickFunction = EmptyFunction;
 		bool isPressed() {
 
 			if (ishov && mouseInf.clicked) {

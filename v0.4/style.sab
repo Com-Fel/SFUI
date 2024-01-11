@@ -1,0 +1,43 @@
+textbox{	
+    font-name=arial.ttf;
+    font-size=15;
+    text-color=(255-255-255);
+
+    background-color=(255-100-100);
+    hover:background-color=(255-150-150);
+    clicked:background-color=(255-200-200);
+
+
+    border-color=(255-255-255);
+    hover:border-color=(100-100-100);
+    clicked:border-color=(50-50-50);
+}
+button2{	
+    font-name=arial.ttf;
+    font-size=25;
+    text-color=(255-255-255);
+    hover:text-color=(0-0-0);
+
+    background-color=(0-0-0);
+    hover:background-color=(255-255-255);
+    clicked:background-color=(255-255-255);
+
+
+    border-color=(255-255-255);
+    hover:border-color=(0-0-0);
+    clicked:border-color=(255-255-255);
+}
+label{
+    font-name=arial.ttf;
+    font-size=20;
+    text-color=(0-0-0);
+
+    background-color=(255-255-255);
+}
+title{
+    font-name=arial.ttf;
+    font-size=30;
+    text-color=(255-255-255);
+
+    background-color=(0-0-0);
+}

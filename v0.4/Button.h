@@ -11,7 +11,9 @@ using namespace basic;
 
 namespace UI {
 
-	class ButtonStyle:public Style {
+
+	void a() {};
+	class ButtonStyle:public StyleSheet {
 
 	public:
 		Vector2f mar;
@@ -38,8 +40,7 @@ namespace UI {
 
 		Font font;
 
-		typedef void (*onClick)();
-		onClick onClickFunction = EmptyFunction;
+		
 		Button(){}
 		Button(Vector2f pos, Vector2f size, Vector2f mar, int bord, vector<vector<Color>> colors, int fontSize, string fontName, string tag, string text) {
 			this->pos = pos;
@@ -54,7 +55,7 @@ namespace UI {
 			texture.create(size.x, size.y);
 
 		}
-		Button(Vector2f pos, Vector2f size, ButtonStyle style, string tag, string text) {
+		Button(Vector2f pos, Vector2f size, StyleSheet style, string tag, string text) {
 			this->pos = pos;
 			this->size = size;
 			this->mar = style.mar;
@@ -74,7 +75,7 @@ namespace UI {
 			Text.setFont(font);
 			texture.create(size.x, size.y);
 		}
-		void Create(Vector2f pos, Vector2f size, ButtonStyle style, string tag, string text) {
+		void Create(Vector2f pos, Vector2f size, StyleSheet style, string tag, string text) {
 			this->pos = pos;
 			this->size = size;
 			this->mar = style.mar;
@@ -90,6 +91,44 @@ namespace UI {
 			Text.setFont(font);
 			texture.create(size.x, size.y);
 		}
+		Button(Block inp, StyleSheets styles) {
+			StyleSheet style ;
+			Vector2f pos(0, 0);
+			Vector2f size(50, 50);
+			string text = "But";
+			string tag = "";
+
+			for (int i = 0;i < inp.params.size();i++) {
+				string key = inp.params[i].key;
+				string value = inp.params[i].value;
+
+
+				if (key == "onclick") {
+					cout << findFunction(value, functionsDictionary).key;
+					onClickFunction = findFunction(value, functionsDictionary).value;
+				}
+				if (key == "pos") {
+					pos = getVector2f(value);
+				}
+
+				if (key == "size") {
+					size = getVector2f(value);
+				
+				}
+				if (key == "text") {
+					text = value;
+				}
+				if (key == "style") {
+					style = styles.getStyle(value);
+				}
+				if (key == "id") {
+					tag = value;
+				}
+			}
+			Create(pos, size, style, tag, text);
+		}
+
+
 		Sprite update(InputInfo inf) {
 			this->mouseInf = inf.mouse;
 			updateClickableInfo();

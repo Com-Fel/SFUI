@@ -44,7 +44,7 @@ namespace UI {
 			texture.create(fontSize*(text.length()+1)/2+mar.x*2, fontSize*1.3+mar.y*2);
 
 		}
-		Label(Vector2f pos, LabelStyle style, string text) {
+		Label(Vector2f pos, StyleSheet style, string text) {
 			this->colors = style.colors;
 			this->fontName = style.fontName;
 			this->text = text;
@@ -55,7 +55,45 @@ namespace UI {
 
 			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
 		}
-		void Create(Vector2f pos, LabelStyle style, string text) {
+		Label(Block inp, StyleSheets styles) {
+			StyleSheet style;
+			Vector2f pos(0, 0);
+			Vector2f size(50, 50);
+			string text = "But";
+			string tag = "";
+
+			for (int i = 0;i < inp.params.size();i++) {
+				string key = inp.params[i].key;
+				string value = inp.params[i].value;
+
+
+
+				if (key == "pos") {
+					pos = getVector2f(value);
+				}
+
+				if (key == "size") {
+					size = getVector2f(value);
+
+				}
+				if (key == "text") {
+					text = value;
+				}
+				if (key == "style") {
+					style = styles.getStyle(value);
+				}
+				if (key == "id") {
+					this->tag = value;
+					tag = value;
+				}
+			}
+
+			Create(pos, style, text);
+		}
+
+
+
+		void Create(Vector2f pos, StyleSheet style, string text) {
 			this->colors = style.colors;
 			this->fontName = style.fontName;
 			this->text = text;
@@ -63,7 +101,6 @@ namespace UI {
 			this->fontSize = style.fontSize;
 			this->mar = style.mar;
 			font.loadFromFile(style.fontName);
-
 			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
 		}
 		Sprite update(InputInfo inputInf) {
@@ -81,10 +118,10 @@ namespace UI {
 			Text.setFont(font);
 			Text.setCharacterSize(fontSize);
 			Text.setPosition(mar.x,mar.y);
-			Text.setFillColor(colors[0][0]);
+			Text.setFillColor(colors[2][0]);
 
 			
-			texture.clear(colors[0][1]);
+			texture.clear(colors[0][0]);
 			texture.draw(Text);
 			texture.display();
 
@@ -94,7 +131,7 @@ namespace UI {
 
 			this->text = text;
 			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
-
+			cout << "YO";
 		}
 	};
 

@@ -1,0 +1,21 @@
+>window(size=200^200,title="STABexample"){
+
+   >head(){
+      >include(type="style",path="style.sab");
+      >include(type="script",path="script.cpp");
+   }
+
+   >body(size=200^200,id="body"){
+      
+      *string name = "NAME"*
+      *int value = 1233*
+
+      >textbox(pos=0^0,size=100^50,style="textbox",placeholder="value",id="va1");
+      >textbox(pos=0^50,size=100^50,style="textbox",placeholder="value",id="va2");
+
+      >button(pos=40^150,size=120^40,style="button2",text="calculate",onclick="fun1");
+
+      >label(pos=120^30,text="ans",style="title",id="ans");
+         
+   }
+}

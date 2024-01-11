@@ -10,7 +10,7 @@ using namespace basic;
 
 namespace UI {
 
-	class SwitcherStyle : public Style {
+	class SwitcherStyle : public StyleSheet {
 	public:
 		Vector2f mar;
 		int bord, fontSize; 
@@ -48,7 +48,7 @@ namespace UI {
 			texture.create(size.x, size.y);
 
 		}
-		Switcher(Vector2f pos, Vector2f size, SwitcherStyle style, string tag, string text) {
+		Switcher(Vector2f pos, Vector2f size, StyleSheet style, string tag, string text) {
 			this->pos = pos;
 			this->size = size;
 			this->mar = style.mar;

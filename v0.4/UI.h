@@ -7,11 +7,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Cursor.hpp>
 
+#include"keyValue.h"
 #include "key.h"
-#include "fileParser.h"
-
 #include "basic.h"
 #include "baseshape.h"
+
+#include "styleParser.h"
+#include "layoutParser.h"
+#include "styleSheet.h"
+#include "scriptParser.h"
 
 #include "Button.h"
 #include "label.h"
@@ -29,6 +33,6 @@
 #include "standartStyles.h"
 #include "scene.h"
 
-#include "baseshape.h"
-
+#include "userScript.h"
+#include "appRunner.h"
 
