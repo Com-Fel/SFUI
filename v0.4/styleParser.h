@@ -136,6 +136,7 @@ KeyValue readString(string inp) {
 vector<KeyValue> ConvertTokeyValueVector(string inp) {
     string temp;
     vector<KeyValue> out;
+
     for (int i = 0;i < inp.size();i++) {
         if (inp[i] != ','&& inp[i] != ';') {
             temp += inp[i];
@@ -202,24 +203,3 @@ Color getColorFromString(string st) {
     return Color(r,g,b);
 }
 
-/*
- button@style-name{	
-    fontname="example.ttf",
-    fontsize=12,
-    textcolor=(255-255-255),
-}
-
-button@style-name:hover{
-
-}
-
-button@style-name:clicked{
-
-}
-
->>head{
-    name=windowname;
-    size=1920^1080;
-}
-
-*/

@@ -15,7 +15,14 @@ namespace basic {
 
 	void EmptyFunction(){}
 
+	class XY {
+		float x, y;
 
+		XY(float x, float y) {
+			this->x = x;
+			this->y = y;
+		}
+	};
 	
 
 	class base {
@@ -27,6 +34,13 @@ namespace basic {
 		bool enabled = true;
 		int id;
 		int Zpos;
+		string strSizeX, strSizeY;
+		string strPosX = "0px", strPosY = "0px";
+
+		typedef void (*onUpdate)();
+		onUpdate onUpdateFunction = EmptyFunction;
+
+
 		base(){}
 		Sprite update() {};
 		Vector2f getPos() {
@@ -40,8 +54,9 @@ namespace basic {
 		}
 		void setSize(Vector2f size) {
 			texture.create(size.x, size.y);
-
 			this->size = size;
+			
+
 		}
 		Vector2f getMargin() {
 			return mar;
@@ -155,6 +170,8 @@ namespace basic {
 		}
 		void setText(string text) {
 			this->text = text;
+			
+
 		}
 	};
 

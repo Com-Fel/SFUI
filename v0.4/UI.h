@@ -11,6 +11,7 @@
 #include "key.h"
 #include "basic.h"
 #include "baseshape.h"
+#include"drawer.h"
 
 #include "styleParser.h"
 #include "layoutParser.h"

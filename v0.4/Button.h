@@ -102,17 +102,23 @@ namespace UI {
 				string key = inp.params[i].key;
 				string value = inp.params[i].value;
 
-
+				
 				if (key == "onclick") {
 					cout << findFunction(value, functionsDictionary).key;
 					onClickFunction = findFunction(value, functionsDictionary).value;
 				}
 				if (key == "pos") {
-					pos = getVector2f(value);
+					strPosX = getStrSize(value)[0];
+					strPosY = getStrSize(value)[1];
+					
 				}
 
 				if (key == "size") {
-					size = getVector2f(value);
+					
+					
+					strSizeX = getStrSize(value)[0];
+					strSizeY = getStrSize(value)[1];
+
 				
 				}
 				if (key == "text") {
@@ -193,7 +199,6 @@ namespace UI {
 		}
 		
 	};
-
 
 	
 }

@@ -35,7 +35,6 @@ namespace UI {
 
 				if (key == "path") {
 					path = value;
-					cout << path;
 				}
 				if (key == "pos") {
 					pos = getVector2f(value);

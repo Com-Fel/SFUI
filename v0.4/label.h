@@ -102,6 +102,9 @@ namespace UI {
 			this->mar = style.mar;
 			font.loadFromFile(style.fontName);
 			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
+
+			
+
 		}
 		Sprite update(InputInfo inputInf) {
 			draw();
@@ -131,8 +134,9 @@ namespace UI {
 
 			this->text = text;
 			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
-			cout << "YO";
+
 		}
+		void setSize(Vector2f inp){}
 	};
 
 }

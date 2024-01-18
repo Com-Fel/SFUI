@@ -227,20 +227,21 @@ Vector2f getVector2f(string inp) {
  
 
 BlockGroup parseFile(string fileName) {
-	vector<BlockGroup> staticGropus;
+	vector<BlockGroup> staticGroups;
 
 
 	string text = readFile(fileName);
 	text = ">fileGroup(){" + text + "}";
 	
-	BlockGroup fileGroup = readBlockGroup(text, 0, staticGropus);
+	BlockGroup fileGroup = readBlockGroup(text, 0, staticGroups);
 
 	for (int i = 0;i < fileGroup.innerGroups.size();i++) {
+		fileGroup = readBlockGroup(text, 0, staticGroups);
 		if (fileGroup.innerGroups[i].type != "window") {
-			staticGropus.push_back(fileGroup.innerGroups[i]);
+			staticGroups.push_back(fileGroup.innerGroups[i]);
 		}
 	}
-	fileGroup = readBlockGroup(text, 0, staticGropus);
+	fileGroup = readBlockGroup(text, 0, staticGroups);
 
 
 	BlockGroup win = fileGroup.getBlockGroup("window");
@@ -249,14 +250,60 @@ BlockGroup parseFile(string fileName) {
 	return win;
 }
 
-/*
 
-Scene loadSceneFromFile(string filename) {
-	string text = readFile(filename);
+float getPX(string inp) {
+	string type,temp;
+	float value;
+	bool isT = false;
 
-	BlockGroup body = readBlockGroup(text,0);
+	for (int i = 0;i < inp.size();i++) {
+		if (((int(inp[i]) > 57 || int(inp[i]) < 48) && inp[i] != '.') && !isT) {
+			value = stof(temp);
+			temp = "";
+			isT = true;
+			
+		}
+		temp += inp[i];
 
+	}
+	type = temp;
+	if (type == "px") {
+		return value;
+	}
+	else {
+		return stoi(inp);
+
+	}
+
+}
+float getPX(string inp,float parentSize) {
+	string type, temp;
+	float value;
+	bool isT = false;
+
+	for (int i = 0;i < inp.size();i++) {
+		if (((int(inp[i]) > 57 || int(inp[i]) < 48) && inp[i] != '.') && !isT) {
+			value = stof(temp);
+			temp = "";
+			isT = true;
+
+		}
+		temp += inp[i];
+
+	}
+	type = temp;
+	if (type == "px") {
+		return value;
+	}
+	else if (type == "%") {
+		return value/100 * parentSize;
+	}
 	
+	
+}
 
-	return new Scene();
-}*/
+
+vector<string> getStrSize(string inp) {
+
+ 	return { readFromTo(inp, '|', '^'), readFromTo(inp, '^', '|') };
+}

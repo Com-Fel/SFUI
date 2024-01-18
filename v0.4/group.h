@@ -45,11 +45,14 @@ namespace UI {
 
 
 				if (key == "pos") {
-					this->pos = getVector2f(value);
+					strPosX = getStrSize(value)[0];
+					strPosY = getStrSize(value)[1];
+
 				}
 
 				if (key == "size") {
-					this->size = getVector2f(value);
+					strSizeX = getStrSize(value)[0];
+					strSizeY = getStrSize(value)[1];
 				}
 				
 				if (key == "id") {
@@ -121,6 +124,14 @@ namespace UI {
 
 				el[i]->enabled = enabled;
 
+
+
+
+				
+				el[i]->setSize(Vector2f(getPX(el[i]->strSizeX,size.x), getPX(el[i]->strSizeY, size.y)));
+				
+				el[i]->setPos(Vector2f(getPX(el[i]->strPosX, size.x), getPX(el[i]->strPosY, size.y)));
+				
 				Vector2f p = el[i]->getPos();
 				Sprite tempTexture = el[i]->update(localInf);
 				
@@ -212,9 +223,8 @@ namespace UI {
 		}
 
 		Label* findLabelById(string id) {
-
+			
 			for (int i = 0;i < labels.size();i++) {
-				cout << labels[i]->tag << endl;
 				if (labels[i]->tag == id) {
 
 					return labels[i];
@@ -248,7 +258,14 @@ namespace UI {
 			
 		}
 			
-		
+		Button* findClickedButton() {
+			for (int i = 0;i < buttons.size();i++) {
+				if (buttons[i]->isclicked) {
+					return buttons[i];
+				}
+			}
+
+		}
 
 	};
 }

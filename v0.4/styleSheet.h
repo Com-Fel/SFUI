@@ -45,6 +45,7 @@ namespace UI {
 				}
 				if (key == "font-size") {
 					fontSize = stoi(value);
+				
 				}
 
 				

@@ -39,15 +39,7 @@ namespace UI {
 		}
 
 
-		template<typename elems>
-		void drawElem(elems el) {
-			for (int i = 0;i < el.size();i++) {
-				Vector2f p = el[i]->getPos();
-				Sprite tempTexture = el[i]->update(localInf);
-				tempTexture.setPosition(p.x + offset.x, p.y + offset.y);
-				texture.draw(tempTexture);
-			}
-		}
+		
 
 
 		void draw() {
