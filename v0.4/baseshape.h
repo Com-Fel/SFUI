@@ -102,7 +102,7 @@ namespace UI {
 			botom.setFillColor(col);
 			center.setFillColor(col);
 
-			texture.clear(Color(0, 0, 0, 0));
+			texture.clear(Color(255, 0, 0, 0));
 	
 
 			texture.draw(c1);

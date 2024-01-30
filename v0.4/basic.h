@@ -16,8 +16,9 @@ namespace basic {
 	void EmptyFunction(){}
 
 	class XY {
+	public:
 		float x, y;
-
+		XY(){}
 		XY(float x, float y) {
 			this->x = x;
 			this->y = y;
@@ -27,11 +28,14 @@ namespace basic {
 
 	class base {
 	public:
-		Vector2f pos, size, mar;
+		Vector2f pos = Vector2f(0,0), size, mar;
+		Vector2f oldSize;
+
 		RenderTexture texture;
 		Sprite sprite;
 		string  tag;
 		bool enabled = true;
+		bool isChange;
 		int id;
 		int Zpos;
 		string strSizeX, strSizeY;
@@ -47,15 +51,24 @@ namespace basic {
 			return pos;
 		}
 		void setPos(Vector2f pos) {
+
+			
+
+			//cout << strPosX << " " << strPosY << tag << endl;
 			this->pos = pos;
+
+			this->strPosX = to_string(int(this->pos.x)) + "px";
+			this->strPosY = to_string(int(this->pos.y)) + "px";
 		}
 		Vector2f getSize() {
 			return size;
 		}
 		void setSize(Vector2f size) {
-			texture.create(size.x, size.y);
 			this->size = size;
-			
+			this->strSizeX = to_string(int(this->size.x)) + "px";
+			this->strSizeY = to_string(int(this->size.y)) + "px";
+			texture.create(size.x, size.y);
+	
 
 		}
 		Vector2f getMargin() {
@@ -117,11 +130,11 @@ namespace basic {
 			int  sy = size.y;
 			if ((((pos.x < mx && mx < pos.x + sx) && (pos.y < my && my < pos.y + sy))&&(!mouseInf.clicked||ishov))&&enabled) {
 				ishov = true;
-				return true;
+				return ishov;
 			}
 			else {
 				ishov = false;
-				return false;
+				return ishov;
 			}
 
 		}
@@ -152,11 +165,15 @@ namespace basic {
 
 		}
 		void updateClickableInfo() {
-			isHover();
-			isPressed();
-			isClicked();
-			isSelected();
-			isChosen();
+			isChange = false;
+			isChange = ishov != isHover() || isChange;
+			isChange = pressed != isPressed() || isChange;
+			isChange = isclicked!=isClicked() || isChange;
+			isChange = selected!=isSelected() || isChange;
+			isChange = chosen!=isChosen() || isChange;
+			if (isChange) {
+				cout << tag << " " << ishov << endl;
+			}
 		}
 	};
 	class Texteble {

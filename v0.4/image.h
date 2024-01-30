@@ -13,13 +13,13 @@ namespace UI {
 	public:
 		Sprite sprite;
 		string path;
-		Texture out;
+		Texture image;
 
 		ImageBox(Vector2f pos,Vector2f size, string path) {
 			this->pos = pos;
 			this->size = size;
 			this->path = path;
-			out.loadFromFile(path);
+			image.loadFromFile(path);
 
 			texture.create(size.x, size.y);
 			draw();
@@ -37,11 +37,16 @@ namespace UI {
 					path = value;
 				}
 				if (key == "pos") {
-					pos = getVector2f(value);
+					strPosX = getStrSize(value)[0];
+					strPosY = getStrSize(value)[1];
+					
+
 				}
 
 				if (key == "size") {
-					size = getVector2f(value);
+					strSizeX = getStrSize(value)[0];
+					strSizeY = getStrSize(value)[1];
+					
 
 				}
 				if (key == "id") {
@@ -49,7 +54,7 @@ namespace UI {
 				}
 				
 			}
-			out.loadFromFile(path);
+			image.loadFromFile(path);
 
 			texture.create(size.x, size.y);
 			draw();
@@ -58,20 +63,29 @@ namespace UI {
 		}
 		ImageBox(){}
 		Sprite update(basic::InputInfo inputInf) {
-			
 
-			sprite.setPosition(pos);
+			if (oldSize != size) {
+				texture.create(size.x, size.y);
+			}
+			oldSize = size;
 
-			return sprite;
+
+			draw();
+			const sf::Texture& out = texture.getTexture();
+			Sprite sp(out);
+			sp.setPosition(pos);
+			sp.setTexture(out);
+			return sp;
 		}
 		void draw() {
-			Sprite sprite(out);
-			sprite.setScale(size.x/out.getSize().x, size.y / out.getSize().y);
-
-			texture.clear(Color(0,0,0,0));
-			texture.draw(sprite);
+			Sprite spriteIm(image);
+			spriteIm.setScale(size.x/ image.getSize().x, size.y / image.getSize().y);
+	
+			
+			texture.clear(Color(255,0,0));
+			texture.draw(spriteIm);
 			texture.display();
-
+			
 		}
 
 	};

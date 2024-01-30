@@ -69,7 +69,8 @@ namespace UI {
 
 
 				if (key == "pos") {
-					pos = getVector2f(value);
+					strPosX = getStrSize(value)[0];
+					strPosY = getStrSize(value)[1];
 				}
 
 				if (key == "size") {

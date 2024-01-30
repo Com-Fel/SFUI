@@ -14,13 +14,20 @@ int RunApplication() {
     setlocale(LC_ALL, "Russian");
 
     BlockGroup win = parseFile("index.stab");
-    BlockGroup head = win.getBlockGroup("head");
-    BlockGroup body = win.getBlockGroup("body");
-    Head headInfo(head);
+    BlockGroup headGroup = win.getBlockGroup("head");
+    BlockGroup bodyGroup = win.getBlockGroup("body");
+    
+    
+    
+    Head headInfo(headGroup);
 
-
-    string oldFile = readFileWithSpaces("SFUI/userScript.h");
-    if (oldFile != parseScript(headInfo.scriptPath)) {
+    
+    string oldScriptFile = readFileWithSpaces("SFUI/userScript.h");
+    string oldIdFile = readFileWithSpaces("SFUI/id.h");
+    
+    string newIdFile = createIdFile(bodyGroup)+'\n';
+    
+    if (oldScriptFile != parseScript(headInfo.scriptPath) || oldIdFile != newIdFile) {
         cout << "Changes saved" << endl;
         return 0;
     }
@@ -40,21 +47,22 @@ int RunApplication() {
     mainScene.setSize(winSize);
 
     RenderWindow window(VideoMode(winSize.x, winSize.y), win.getValue("title"), sf::Style::Close, settings);
-    window.setFramerateLimit(60);
-
+    window.setFramerateLimit(120);
+   
 
     WindowsRenderer windowsRenderer(Vector2f(window.getSize().x, window.getSize().y));
 
     
     
     ContextMenuRenderer contextMenuRenderer(Vector2f(1920, 1080), StandartContextMenuStyle);
-    Group Gbody(body, styles);
+    Group Gbody(bodyGroup, styles);
     mainScene.append(&Gbody);
 
     drawer.setSize(winSize);
-    drawer.drawRect(Vector2f(500,500),Vector2f(100,100),Color::White);
-
+    
+    initID();
     onLoad();
+    sf::Clock clock;
     while (window.isOpen())
     {
         //mainScene.setSize(Vector2f(window.getSize().x, window.getSize().y));
@@ -68,16 +76,17 @@ int RunApplication() {
         inputInfo.update(evt, Mouse::getPosition(window));
         windowsRenderer.update(inputInfo);
 
-
         onUpdate();
 
-        window.clear();
+       
         
         window.draw(mainScene.update(inputInfo));
-        window.draw(drawer.sprite);
+        //window.draw(drawer.sprite);
 
         window.display();
-        
+        sf::Time elapsed = clock.restart();
+        float fps = 1.0f / elapsed.asSeconds();
+        FPS->setText(to_string(int(fps))+" fps");
     }
     return 0;
 }

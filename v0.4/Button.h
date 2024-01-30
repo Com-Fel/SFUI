@@ -12,6 +12,7 @@ using namespace basic;
 namespace UI {
 
 
+
 	void a() {};
 	class ButtonStyle:public StyleSheet {
 
@@ -196,6 +197,11 @@ namespace UI {
 			texture.display();
 
 
+		}
+
+		void setText(string text) {
+			Text.setString(text);
+			this->text = text;
 		}
 		
 	};

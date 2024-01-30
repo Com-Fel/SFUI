@@ -1,158 +1,164 @@
-
 #include<iostream>
 #include<vector>
 #include"SFUI/UI.h"
 
 
-vector<Vector2f> snakepos = {Vector2f(0,0)};
-Vector2f eatPos(rand()%12, rand() % 12);
-
-int dirX = 1, dirY = 0;
-int ticker = 0,score = 0;
-bool isDead = false;
-
-Group* body;
-void die() {
-	
-
-	isDead = true;
-}
-
-void moveSnake() {
-	Vector2f bPos = snakepos[snakepos.size() - 1];
-	Vector2f aPos = Vector2f(bPos.x + dirX, bPos.y + dirY);
-
-	
-	for (int i = 0;i < snakepos.size() - 1;i++) {
-		if (aPos == snakepos[i]) {
-
-			die();
-			return;
-		}
-	}
-	if (aPos.x < 0 || aPos.x > 11 || aPos.y < 0 || aPos.y > 11) {
-
-		die();
-		return;
-	}
-	snakepos.push_back(aPos);
-
-	if (snakepos[snakepos.size() - 1] != eatPos) {
-		snakepos.erase(snakepos.begin());
-	}
-	else {
-		bool inSnake = true;
-		while (inSnake) {
-			eatPos.x = rand() % 12;
-			eatPos.y = rand() % 12;
-			inSnake = false;
-			for (int i = 0;i < snakepos.size();i++) {
-				if (eatPos == snakepos[i]) {
-					inSnake = true;
-				}
-			}
-		}
-		score += 100;
-	    body->findGroupById("menu")->findLabelById("score")->setText("Score: "+to_string(score));
-	}
-
-	
-
-	ticker = 0;
-}
+vector<XY> tablePoses = { XY(269,80),XY(269,270), XY(269,446),XY(489,80), XY(489,270), XY(489,446) };
 
 
-void drawSnake() {
-	for (int i = 0;i < snakepos.size()-1;i++) {
-
-		drawer.drawRect(Vector2f(snakepos[i].x* 50 + 10, snakepos[i].y * 50 + 10), Vector2f(30, 30), Color(255* isDead, 255*!isDead, 0));
-
-	}
-	drawer.drawRect(Vector2f(snakepos[snakepos.size()-1].x * 50 + 10, snakepos[snakepos.size() - 1].y * 50 + 10), Vector2f(30, 30), Color(255 * !isDead+100*isDead, 255 * !isDead, 0));
-}
+Application app;
 
 
-void drawPlayBoard() {
+class Human {
+public:
+    XY pos = XY(55, 55);
+    string id;
+    bool moving = false;
+    XY target = pos;
+    float speed = 4;
+    float dx, dy, distanceForTarget = 0, speedX = 0, speedY = 0;
+    Human() {}
+    Human(string id) {
+        pos;
+        this->id = id;
+    }
+    void move(float x, float y) {
+        this->pos.x += x;
+        this->pos.y += y;
+    }
+    void moveTo(float x, float y) {
 
-	
-	for (int x = 0;x < 12;x++) {
+        if (!moving) {
 
-		for (int y = 0;y < 12;y++) {
-			drawer.drawRect(Vector2f(x*50+20,y*50+20),Vector2f(10,10),Color(25,25,25));
-		}
-	}
-}
+            target.x = x;
+            target.y = y;
+            dx = target.x - pos.x;
+            dy = target.y - pos.y;
+            moving = true;
 
-void input() {
-	for (int i = 0;i < inputInfo.clickedKeyCodes.size();i++) {
+            distanceForTarget = sqrt(pow(dx, 2) + pow(dy, 2));
 
-		int code = inputInfo.pressedKeyCodes[i];
 
-		if (code == keyCode.A && (dirX == 0 || dirX == -1)) {
-			dirX = -1;
-			dirY = 0;
-			moveSnake();
+            if (distanceForTarget != 0) {
+                speedX = (speed * dx) / distanceForTarget;
+                speedY = (speed * dy) / distanceForTarget;
+            }
+            else {
+                //cout << dy << " " << dx << endl;
+            }
+            //cout << distanceForTarget;
 
-		}
-		if (code == keyCode.D && (dirX == 0 || dirX == 1)) {
-			dirX = 1;
-			dirY = 0;
-			moveSnake();
-		}
-		if (code == keyCode.S && (dirY == 0 || dirY == 1)) {
-			dirY = 1;
-			dirX = 0;
-			moveSnake();
-		}
-		if (code == keyCode.W && (dirY == 0 || dirY == -1)) {
-			dirY = -1;
-			dirX = 0;
-			moveSnake();
-		}
-	}
-}
+        }
+        else if (distanceForTarget > speed) {
+            dx = target.x - pos.x;
+            dy = target.y - pos.y;
 
+            distanceForTarget = sqrt(pow(dx, 2) + pow(dy, 2));
+            move(speedX, speedY);
+        }
+        else {
+            pos.x = target.x;
+            pos.y = target.y;
+            target.x = pos.x;
+            target.y = pos.y;
+
+            moving = false;
+        }
+
+    }
+
+    void moveToTarget() {
+        if (target.x != pos.x || target.y != pos.y) {
+            moveTo(target.x, target.y);
+        }
+        else {
+            moving = false;
+        }
+    }
+};
+
+class Waiter : public Human {
+public:
+    int targetTable = 0;
+    Waiter() {
+
+    }
+
+};
+
+
+
+
+vector<Human> humans = {};
+vector<Waiter> waiters = {};
 void onLoad() {
 
+    Human off1("off1");
+
+    humans.push_back(off1);
+
+    Waiter off2,off3,off4;
+
+
+    waiters.push_back(off2);
+    waiters.push_back(off3);
+    waiters.push_back(off4);
+
+    body->createBlock("Player");
+    body->createBlock("Player");
+    body->createBlock("Player");
+    body->createBlock("Player");
+
+
 }
+
+void drawPol() {
+
+}
+
+void moveToTable() {
+    for (int i = 0;i < tables->groups.size();i++) {
+        string id = "tabBut";
+
+        if (tables->groups[i]->findButtonById(id)->isclicked) {
+            for (int j = 0;j < waiters.size();j++) {
+                cout << waiters[j].moving;  
+                if (!waiters[j].moving) {
+                    waiters[j].moving = false;
+                    waiters[j].target.x = tablePoses[i].x + tables->getPos().x;
+                    waiters[j].target.y = tablePoses[i].y + tables->getPos().y;
+                    break;
+                }
+            }
+        }
+
+    }
+
+
+}
+
+
+
 
 void onUpdate() {
-	body = mainScene.findGroupById("body");
 
-	if (!isDead) {
-		input();
 
-		if (ticker >= 15) {
-			moveSnake();
-		}
-		ticker++;
-	}
 
-	drawer.clear();
-	drawPlayBoard();
-	if (!isDead) {
-		drawer.drawRect(Vector2f(eatPos.x * 50 + 10, eatPos.y * 50 + 10), Vector2f(30, 30), Color(255, 0, 0));
-	}
+    for (int i = 0;i < humans.size();i++) {
+        humans[i].moveToTarget();
+    }
+    for (int i = 0;i < waiters.size();i++) {
+        waiters[i].moveToTarget();
+    }
+    pl1->setPos(Vector2f(waiters[0].pos.x, waiters[0].pos.y));
+    pl2->setPos(Vector2f(waiters[1].pos.x, waiters[1].pos.y));
+    pl3->setPos(Vector2f(waiters[2].pos.x, waiters[2].pos.y));
 
-	drawSnake();
 
 
 }
 
-
-
-void restart() {
-	snakepos = { Vector2f(0,0) };
-	eatPos.x = rand() % 12;eatPos.y=rand() % 12;
-
-	dirX = 1, dirY = 0;
-	ticker = 0, score = 0;
-    isDead = false;
-	body->findGroupById("menu")->findLabelById("score")->setText("Score: " + to_string(score));
-
-
-}
 
 void loadChanges(){
-	functionsDictionary = {Function("die", &die),Function("moveSnake", &moveSnake),Function("drawSnake", &drawSnake),Function("drawPlayBoard", &drawPlayBoard),Function("input", &input),Function("onLoad", &onLoad),Function("onUpdate", &onUpdate),Function("restart", &restart)};
+	functionsDictionary = {Function("onLoad", &onLoad),Function("drawPol", &drawPol),Function("moveToTable", &moveToTable),Function("onUpdate", &onUpdate)};
 }

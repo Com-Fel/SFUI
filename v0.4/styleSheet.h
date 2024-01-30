@@ -48,7 +48,28 @@ namespace UI {
 				
 				}
 
-				
+
+
+				if (key == "border-size") {
+					bord = stoi(value);
+				}
+				if (key == "border-color") {
+					colors[1][0] = getColorFromString(value);
+					colors[1][1] = getColorFromString(value);
+					colors[1][2] = getColorFromString(value);
+
+				}
+				if (key == "hover:border-color") {
+					colors[1][1] = getColorFromString(value);
+				}
+				if (key == "clicked:border-color") {
+					colors[1][2] = getColorFromString(value);
+				}
+				if (key == "border-radius") {
+					rads = { getPX(value), getPX(value) ,getPX(value) ,getPX(value) };
+				}
+
+
 
 				if (key == "background-color") {
 					colors[0][0] = getColorFromString(value);
@@ -62,19 +83,7 @@ namespace UI {
 					colors[0][2] = getColorFromString(value);
 				}
 
-				if (key == "border-color") {
-					colors[1][0] = getColorFromString(value);
-					colors[1][1] = getColorFromString(value);
-					colors[1][2] = getColorFromString(value);
-
-				}
-				if (key == "hover:border-color") {
-					colors[1][1] = getColorFromString(value);
-				}
-				if (key == "clicked:border-color") {
-					colors[1][2] = getColorFromString(value);
-				}
-
+				
 
 				if (key == "text-color") {
 					colors[2][0] = getColorFromString(value);
@@ -101,7 +110,7 @@ namespace UI {
 	class StyleSheets {
 	public:
 		vector<StyleSheet*> styles;
-
+		StyleSheets(){}
 
 		StyleSheets(string path) {
 			vector<RawStyle> inp = getRawStyleVector(divideBlocks(readFile(path)));

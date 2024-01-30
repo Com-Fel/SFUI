@@ -57,6 +57,8 @@ public:
 	vector<IntKeyValue> intVar;
 	vector<FloatKeyValue> floatVar;
 	vector<StringKeyValue> stringVar;
+
+	bool isPref = false;
 	void info() {
 		
 
@@ -154,7 +156,7 @@ BlockGroup readBlockGroup(string inp, int start, vector<BlockGroup> staticGroups
 					if (block.type == staticGroups[j].type) {
 						
 						BlockGroup statCopy = staticGroups[j];
-
+						statCopy.isPref = true;
 						statCopy.copy(block);
 						out.innerGroups.push_back(statCopy);
 						temp = "";
@@ -225,9 +227,9 @@ Vector2f getVector2f(string inp) {
 	return Vector2f(stof(readFromTo(inp,'|','^')), stof(readFromTo(inp, '^', '|')));
 }
  
+vector<BlockGroup> staticGroups;
 
 BlockGroup parseFile(string fileName) {
-	vector<BlockGroup> staticGroups;
 
 
 	string text = readFile(fileName);
@@ -278,11 +280,13 @@ float getPX(string inp) {
 }
 float getPX(string inp,float parentSize) {
 	string type, temp;
-	float value;
+	float value=0;
 	bool isT = false;
 
 	for (int i = 0;i < inp.size();i++) {
+		
 		if (((int(inp[i]) > 57 || int(inp[i]) < 48) && inp[i] != '.') && !isT) {
+			
 			value = stof(temp);
 			temp = "";
 			isT = true;

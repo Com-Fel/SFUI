@@ -8,7 +8,7 @@ namespace UI {
 	class Scene :public Group {
 	public:
 		vector<LocalWindow*> windows;
-
+		Scene(){}
 		Scene(Vector2f size, Color color) {
 			this->pos = Vector2f(0, 0);
 			this->size = size;
@@ -29,8 +29,9 @@ namespace UI {
 
 
 			updateClickableInfo();
-			draw();
-
+			
+				draw();
+			
 			const sf::Texture& out = texture.getTexture();
 			Sprite sprite(out);
 			sprite.setPosition(pos);
@@ -91,5 +92,5 @@ namespace UI {
 			windows.push_back(lw);
 		}
 	};
+	Scene mainScene(Vector2f(1920, 1080), Color(0, 0, 0));
 }
-Scene mainScene(Vector2f(1920, 1080), Color(0, 0, 0));

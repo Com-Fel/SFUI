@@ -174,7 +174,7 @@ vector<RawStyle> getRawStyleVector(vector<string> inp) {
 Color getColorFromString(string st) {
     
     string temp;
-    int r = -1, g = -1, b = -1;
+    int r = -1, g = -1, b = -1,a=-1;
 
     
     for (int i = 1;i < st.size();i++) {
@@ -194,12 +194,27 @@ Color getColorFromString(string st) {
                 b = stoi(temp);
                 temp = "";
             }
+            else if (a == 255) {
+                a = stoi(temp);
+                temp = "";
+            }
         }
     }
     if (!temp.empty()) {
-        b = stoi(temp);
-        temp = "";
+        if (b == -1) {
+            b = stoi(temp);
+        }
+
+        else {
+            a = stoi(temp);
+
+        }
     }
-    return Color(r,g,b);
+    if (a == -1) {
+        a = 255;
+
+    }
+    cout << r << " " << g << " " << b << " " << a << endl;
+    return Color(r,g,b,a);
 }
 

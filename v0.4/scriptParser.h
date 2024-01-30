@@ -75,12 +75,18 @@ string parseScript(string filename) {
     string dictionary = "void loadChanges(){\n	functionsDictionary = {",temp;
 
     bool readName = false;
-
+    int deep = 0;
     for (int i = 0;i < text.size();i++) {
         if (text[i] != ' ' && text[i] != '	'&& text[i] !=  '(') {
             temp += text[i];
         }
-        if (readLast(temp,4) == "void") {
+        if (text[i] == '{') {
+            deep++;
+        }
+        if (text[i] == '}') {
+            deep--;
+        }
+        if (readLast(temp,4) == "void" && deep ==0) {
             readName = true;
             temp = "";
         }

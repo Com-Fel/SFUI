@@ -21,8 +21,14 @@ namespace UI {
 		Vector2f offset = Vector2f(0,0);
 		MouseInf localMouse;
 
+
+		string background = "";
+		Texture backgroundImage;
+
 		string input;
 		InputInfo localInf;
+
+		StyleSheets styles;
 		Group(Vector2f pos, Vector2f size, Color color) {
 			this->pos = pos;
 			this->size = size;
@@ -32,7 +38,7 @@ namespace UI {
 
 		}
 		Group(BlockGroup inp,StyleSheets styles) {
-
+			this->styles = styles;
 
 
 			this->pos = Vector2f(0,0);
@@ -60,6 +66,10 @@ namespace UI {
 				}
 				if (key == "color") {
 					this->colors[0][0] = getColorFromString(value);
+				}
+				if (key == "background-image") {
+					this->background = value;
+					backgroundImage.loadFromFile(background);
 				}
 			}
 
@@ -108,9 +118,9 @@ namespace UI {
 
 
 			updateClickableInfo();
-
+			
 			draw();
-
+			
 			const sf::Texture& out = texture.getTexture();
 			sprite.setTexture(out);
 			sprite.setPosition(pos);
@@ -120,32 +130,29 @@ namespace UI {
 
 		template<typename elems>
 		void drawElem(elems el) {
+			
 			for (int i = 0;i < el.size();i++) {
 
 				el[i]->enabled = enabled;
 
-
-
-
-				
 				el[i]->setSize(Vector2f(getPX(el[i]->strSizeX,size.x), getPX(el[i]->strSizeY, size.y)));
 				
 				el[i]->setPos(Vector2f(getPX(el[i]->strPosX, size.x), getPX(el[i]->strPosY, size.y)));
 				
 				Vector2f p = el[i]->getPos();
 				Sprite tempTexture = el[i]->update(localInf);
-				
+				isChange = el[i]->isChange || isChange;
 
 				tempTexture.setPosition(p.x + offset.x, p.y + offset.y);
 				texture.draw(tempTexture);
 			}
 		}
-
-
+		
 
 		void draw() {
 
 			InputInfo inp;
+			
 			if(colors.empty()){
 				texture.clear(Color(0,0,0,0));
 
@@ -154,15 +161,20 @@ namespace UI {
 				texture.clear(colors[0][0]);
 
 			}
-			
+			if (!background.empty()) {
+				Sprite spriteIm(backgroundImage);
+				spriteIm.setScale(size.x / backgroundImage.getSize().x, size.y / backgroundImage.getSize().y);
+				texture.draw(spriteIm);
+
+			}
 			drawElem(buttons);
 			drawElem(labels);
-			drawElem(images);
+			
 			drawElem(textboxes);
 			drawElem(groups);
 			drawElem(sliders);
 			drawElem(switchers);
-			
+			drawElem(images);
 			texture.display();
 
 		}
@@ -211,8 +223,18 @@ namespace UI {
 		void createGroup(Vector2f pos, Vector2f size, Color color) {
 			append(new Group(pos,size,color));
 		}
+		Group* createBlock(string name) {
+			for (int i = 0;i < staticGroups.size();i++) {
+				if (staticGroups[i].type == name) {
+					append(new Group(staticGroups[i],styles));
+					break;
+				}
+			}
+			return groups[groups.size() - 1];
+		}
+
 		
-		template<typename  Element>
+		
 		Button* findButtonById(string id) {
 			for (int i = 0;i < buttons.size();i++) {
 				if (buttons[i]->tag == id) {
@@ -257,13 +279,33 @@ namespace UI {
 			}
 			
 		}
-			
-		Button* findClickedButton() {
+		bool haveClickedButton() {
 			for (int i = 0;i < buttons.size();i++) {
 				if (buttons[i]->isclicked) {
-					return buttons[i];
+					return true;
 				}
 			}
+			for (int i = 0;i < groups.size();i++) {
+				if (groups[i]->haveClickedButton()) {
+					return true;
+				}
+			}
+			return false;
+
+		}
+		Button** findClickedButton() {
+			for (int i = 0;i < buttons.size();i++) {
+				if (buttons[i]->isclicked) {
+					return &buttons[i];
+				}
+			}
+			for (int i = 0;i < groups.size();i++) {
+				if (groups[i]->haveClickedButton()) {
+					return groups[i]->findClickedButton();
+				}
+
+			}
+			return new Button*();
 
 		}
 
