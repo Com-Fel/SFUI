@@ -9,7 +9,6 @@ using namespace UI;
 
 
 
-
 int RunApplication() {
     setlocale(LC_ALL, "Russian");
 
@@ -47,8 +46,9 @@ int RunApplication() {
     mainScene.setSize(winSize);
 
     RenderWindow window(VideoMode(winSize.x, winSize.y), win.getValue("title"), sf::Style::Close, settings);
-    window.setFramerateLimit(120);
+    window.setFramerateLimit(60);
    
+
 
     WindowsRenderer windowsRenderer(Vector2f(window.getSize().x, window.getSize().y));
 

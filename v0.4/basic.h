@@ -35,7 +35,7 @@ namespace basic {
 		Sprite sprite;
 		string  tag;
 		bool enabled = true;
-		bool isChange;
+		bool isChange, parentChange;
 		int id;
 		int Zpos;
 		string strSizeX, strSizeY;
@@ -67,7 +67,9 @@ namespace basic {
 			this->size = size;
 			this->strSizeX = to_string(int(this->size.x)) + "px";
 			this->strSizeY = to_string(int(this->size.y)) + "px";
-			texture.create(size.x, size.y);
+			if (texture.getSize().x != size.x|| texture.getSize().y != size.y) {
+				texture.create(size.x, size.y);
+			}
 	
 
 		}
@@ -171,9 +173,7 @@ namespace basic {
 			isChange = isclicked!=isClicked() || isChange;
 			isChange = selected!=isSelected() || isChange;
 			isChange = chosen!=isChosen() || isChange;
-			if (isChange) {
-				cout << tag << " " << ishov << endl;
-			}
+			
 		}
 	};
 	class Texteble {

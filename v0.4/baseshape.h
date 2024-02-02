@@ -18,40 +18,49 @@ namespace UI {
 		vector<float> rads;
 		Color col;
 		RenderTexture texture;
+		Sprite sprite;
+
+		RectangleShape top, botom, left, right, center;
+		CircleShape c1, c2, c3, c4;
 		BaseShape(){}
 		BaseShape(Vector2f size, vector<float> rads, Color col) {
 			this->size = size;
 			this->rads = rads;
 			this->col = col;
-			texture.create(size.x, size.y);
 		}
 		Sprite create() {
 			texture.create(size.x, size.y);
 
 			draw();
-
 			const sf::Texture& out = texture.getTexture();
-			Sprite sprite(out);
-			sprite.setPosition(pos);
+			Sprite sprite1(out);
+			sprite1.setPosition(pos);
+			sprite = sprite1;
+
 			return sprite;
 		}
 		void setSize(Vector2f size) {
 			this->size = size;
+			texture.create(size.x, size.y);
+
 		}
 		void setPosition(Vector2f pos) {
 			this->pos = pos;
 
+
 		}
 		void setFillColor(Color col) {
 			this->col = col;
+
 		}
 		void setRads(vector<float> rads) {
 			this->rads = rads;
+
 		}
 		void draw() {
-			RectangleShape top, botom, left, right, center;
-			CircleShape c1, c2, c3, c4;
+			
 
+			
 			float bs = rads[distance(rads.begin(), max_element(rads.begin(), rads.end()))];
 			c1.setOrigin(rads[0], rads[0]);
 			c2.setOrigin(rads[1], rads[1]);

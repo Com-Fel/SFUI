@@ -40,7 +40,7 @@ namespace UI {
 		BaseShape fon;
 
 		Font font;
-
+		int colorSwitch = -1;
 		
 		Button(){}
 		Button(Vector2f pos, Vector2f size, Vector2f mar, int bord, vector<vector<Color>> colors, int fontSize, string fontName, string tag, string text) {
@@ -88,7 +88,7 @@ namespace UI {
 			this->tag = tag;
 			this->text = text;
 			font.loadFromFile(fontName);
-			Text.setString(text);
+			Text.setString(String::fromUtf8(text.begin(), text.end()));
 			Text.setFont(font);
 			texture.create(size.x, size.y);
 		}
@@ -142,7 +142,9 @@ namespace UI {
 			if (isclicked) {
 				onClickFunction();
 			}
+			
 			draw();
+			
 			const sf::Texture& out = texture.getTexture();
 
 			Sprite sprite(out);
@@ -151,45 +153,78 @@ namespace UI {
 			return sprite;
 		}
 		void draw() {
-
-		
-			
-			border.setRads(rads);
-			fon.setRads(rads);
-			
+			bool fonChange = false, bordChange = false;
+			if (border.rads != rads) {
+				border.setRads(rads);
+				bordChange = true;
+			}
+			if (fon.rads!=rads) {
+				fon.setRads(rads);
+				fonChange = true;
+			}
 
 			
 			Text.setCharacterSize(fontSize);
 			Text.setPosition(mar.x, mar.y);
 
+			if (border.size != size) {
+				border.setSize(Vector2f(size.x, size.y));
+				bordChange = true;
 
-			border.setSize(Vector2f(size.x, size.y));
-			border.setPosition(Vector2f(0, 0));
+			}
+			
+			if (fon.size != Vector2f(size.x - 2 * bord, size.y - 2 * bord)) {
+				fon.setSize(Vector2f(size.x - 2 * bord, size.y - 2 * bord));
+				fonChange = true;
 
-			fon.setSize(Vector2f(size.x - 2 * bord, size.y - 2 * bord));
-			fon.setPosition(Vector2f(bord, bord));
+			}
+			if (fon.pos != Vector2f(bord, bord)) {
+				fon.setPosition(Vector2f(bord, bord));
+				fonChange = true;
+
+			}
+			
 			Text.setPosition(mar.x, mar.y);
-
-			if (selected) {
+ 			
+		     if (selected && colorSwitch!=2) {
+				 colorSwitch = 2;
 				fon.setFillColor(colors[0][2]);
 				border.setFillColor(colors[1][2]);
 				Text.setFillColor(colors[2][2]);
+				fonChange = true;
+				bordChange = true;
+
+
 			}
-			else if (ishov) {
+			else if (!selected && ishov && colorSwitch != 1) {
+				 colorSwitch = 1;
+
 				fon.setFillColor(colors[0][1]);
 				border.setFillColor(colors[1][1]);
 				Text.setFillColor(colors[2][1]);
+				fonChange = true;
+				bordChange = true;
 			}
-			else {
+			else if(!selected &&!ishov &&colorSwitch != 0) {
+				 colorSwitch = 0;
 				fon.setFillColor(colors[0][0]);
 				border.setFillColor(colors[1][0]);
 				Text.setFillColor(colors[2][0]);
+				fonChange = true;
+				bordChange = true;
 			}
 
+			if (fonChange) {
+				fon.create();
+			}
+
+			if (bordChange) {
+				border.create();
+			}
 			texture.clear(Color(0,0,0,0));
 
-			texture.draw(border.create());
-			texture.draw(fon.create());
+			texture.draw(border.sprite);
+			texture.draw(fon.sprite);
 
 			texture.draw(Text);
 

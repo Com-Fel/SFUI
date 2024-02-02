@@ -290,7 +290,7 @@ float getPX(string inp,float parentSize) {
 			value = stof(temp);
 			temp = "";
 			isT = true;
-
+			
 		}
 		temp += inp[i];
 

@@ -23,7 +23,8 @@ namespace UI {
 			this->color2 = color2;
 			this->size = size;
 			this->pos = pos;
-			texture.create(255,size.y);
+			
+			(255,size.y);
 		}
 		
 

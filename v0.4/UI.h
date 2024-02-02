@@ -6,12 +6,16 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Cursor.hpp>
+#include <SFML/OpenGL.hpp>
+#include <SFML/Audio.hpp>
 
 #include "keyValue.h"
 #include "key.h"
 #include "basic.h"
 #include "baseshape.h"
 #include "drawer.h"
+#include "SoundManager.h"
+
 
 #include "styleParser.h"
 #include "layoutParser.h"

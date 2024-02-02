@@ -53,7 +53,7 @@ namespace UI {
 			this->mar = style.mar;
 			font.loadFromFile(style.fontName);
 
-			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
+			texture.create(Text.getLocalBounds().width + fontSize / 5, Text.getLocalBounds().height * 1.2);
 		}
 		Label(Block inp, StyleSheets styles) {
 			StyleSheet style;
@@ -101,11 +101,12 @@ namespace UI {
 			this->pos = pos;
 			this->fontSize = style.fontSize;
 			this->mar = style.mar;
+			Text.setString(String::fromUtf8(text.begin(), text.end()));
+
 			font.loadFromFile(style.fontName);
-			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
-
-			
-
+			Text.setFont(font);
+			Text.setCharacterSize(fontSize);
+			texture.create(Text.getLocalBounds().width +fontSize/5, Text.getLocalBounds().height * 1.2);
 		}
 		Sprite update(InputInfo inputInf) {
 			draw();
@@ -118,7 +119,7 @@ namespace UI {
 		void draw() {
 			
 
-			Text.setString(text);
+			Text.setString(String::fromUtf8(text.begin(), text.end()));
 			Text.setFont(font);
 			Text.setCharacterSize(fontSize);
 			Text.setPosition(mar.x,mar.y);
@@ -134,7 +135,10 @@ namespace UI {
 		void setText(string text) {
 
 			this->text = text;
-			texture.create(fontSize * (text.length() + 1) / 2 + mar.x * 2, fontSize * 1.3 + mar.y * 2);
+			Vector2f newSize = Vector2f(Text.getLocalBounds().width + fontSize / 5, Text.getLocalBounds().height * 1.2);
+			if (texture.getSize().x != newSize.x || texture.getSize().y != newSize.y) {
+				texture.create(newSize.x, newSize.y);
+			}
 
 		}
 		void setSize(Vector2f inp){}

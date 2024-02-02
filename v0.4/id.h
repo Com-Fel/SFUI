@@ -10,12 +10,15 @@ Group* t5;
 Group* t6;
 Group* kitchen;
 Group* bar;
+Group* walls;
+ImageBox*wallIm;
 Group* canvas;
 Button*esc_button;
 Label*FPS;
 Group* pl1;
 Group* pl2;
 Group* pl3;
+Label*FPS1;
 
 void initID(){
 body = mainScene.findGroupById("body");
@@ -28,11 +31,14 @@ t5 = tables->findGroupById("t5");
 t6 = tables->findGroupById("t6");
 kitchen = body->findGroupById("kitchen");
 bar = body->findGroupById("bar");
+walls = body->findGroupById("walls");
+wallIm = walls->findImageBoxById("wallIm");
 canvas = body->findGroupById("canvas");
 esc_button = canvas->findButtonById("esc_button");
 FPS = canvas->findLabelById("FPS");
 pl1 = body->findGroupById("pl1");
 pl2 = body->findGroupById("pl2");
 pl3 = body->findGroupById("pl3");
+FPS1 = body->findLabelById("FPS1");
 
 }

@@ -7,7 +7,7 @@ vector<XY> tablePoses = { XY(269,80),XY(269,270), XY(269,446),XY(489,80), XY(489
 
 
 Application app;
-
+SoundManager sm;
 
 class Human {
 public:
@@ -104,11 +104,8 @@ void onLoad() {
     waiters.push_back(off3);
     waiters.push_back(off4);
 
-    body->createBlock("Player");
-    body->createBlock("Player");
-    body->createBlock("Player");
-    body->createBlock("Player");
-
+        
+    sm.loadSound("cl","sounds/click.wav");
 
 }
 
@@ -117,12 +114,14 @@ void drawPol() {
 }
 
 void moveToTable() {
+
+    sm.playSound("cl");
     for (int i = 0;i < tables->groups.size();i++) {
         string id = "tabBut";
 
         if (tables->groups[i]->findButtonById(id)->isclicked) {
             for (int j = 0;j < waiters.size();j++) {
-                cout << waiters[j].moving;  
+               
                 if (!waiters[j].moving) {
                     waiters[j].moving = false;
                     waiters[j].target.x = tablePoses[i].x + tables->getPos().x;
